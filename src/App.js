@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import './App.css';
+import EditProfile from './components/editProfile/editProfile';
 import ForgetPassword from './components/registration/forgetPassword';
 import Login from './components/registration/login';
 import SignUp from './components/registration/sign-up';
@@ -25,10 +26,12 @@ function App() {
       <Router>
         <AuthProvider>
           <LanguageProvider value={{ lang, setLang }}>
+            <Route path="/" exact component={Test} />
             <Route path="/login" exact component={Login} />
             <Route path="/sign-up" exact component={SignUp} />
             <Route path="/forget-password" exact component={ForgetPassword} />
-            <Route path="/" exact component={Test} />
+            <Route path="/profile" component={EditProfile} />
+
           </LanguageProvider>
         </AuthProvider>
       </Router>
