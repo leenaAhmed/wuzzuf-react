@@ -1,8 +1,12 @@
-import { current } from "@reduxjs/toolkit";
 import React, { useContext, useRef, useState } from "react"
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { languageContext } from "../../contexts/languageContext";
+import { db } from "../../firebase";
+import { toast } from 'react-toastify';
+import { useHistory } from "react-router-dom";
+
+
 function SignUp() {
     const [error, setError] = useState('')
     const emailRef = useRef()
@@ -11,12 +15,32 @@ function SignUp() {
     const passwordRef = useRef()
     const { signUp, currentUser } = useAuth()
     const { lang, setLang } = useContext(languageContext)
+    const history = useHistory()
 
     async function handleSumbite(e) {
         e.preventDefault()
         try {
             setError("")
-            await signUp(emailRef.current.value, passwordRef.current.value)
+            await signUp(emailRef.current.value, passwordRef.current.value).then((auth) => {
+                if (auth) {
+                    db.collection("users")
+                        .doc(auth.user.uid)
+                        .set({
+                            email: emailRef.current.value,
+                            firstName: firstNameRef.current.value,
+                            lastName: lastNameRef.current.value,
+                        }).then(() => {
+                            toast.success("sinued up succesfully !", {
+                                position: toast.POSITION.TOP_LEFT
+                            })
+                            history.push("/")
+                        })
+                }
+            }).catch((err) => {
+                toast.error("uneable to sign up !", {
+                    position: toast.POSITION.TOP_LEFT
+                })
+            })
         }
         catch (error) {
             lang == "English" ? setError(error.message) : setError("من فضلك ادخل البيانات بالشكل الصحيح")
