@@ -13,7 +13,7 @@ export default function AdditionalInfo() {
                             <div className="midsection__form">
                                 <p className="midsection__form__pa">Sports, patents, publications, books, awards, etc.</p>
                                 <div className="form-group">
-                                    <label for="exampleFormControlTextarea1" className="form-label">Add Achievements</label>
+                                    <label htmlFor="exampleFormControlTextarea1" className="form-label">Add Achievements</label>
                                     <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                                 <p className="midsection__form__pa mt-2">You have 1000 characters remaining (max 1000)</p>

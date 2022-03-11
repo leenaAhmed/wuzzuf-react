@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 import './editProfile.scss'
+
+
 export default function GeneralInfo() {
     const params = useParams()
     console.log(params.userId);
@@ -14,20 +16,20 @@ export default function GeneralInfo() {
                         <form className="row">
                             <div className="col-md-6 ">
                                 <div className="midsection__form">
-                                    <label for="FirstName" className="form-label labelFont">First Name</label>
+                                    <label htmlFor="FirstName" className="form-label labelFont">First Name</label>
                                     <span className="text-danger">*</span>
                                     <input type="text" className="form-control" id="FirstName" />
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="midsection__form">
-                                    <label for="MiddleName" className="form-label">Middle Name</label>
+                                    <label htmlFor="MiddleName" className="form-label">Middle Name</label>
                                     <input type="text" className="form-control" id="MiddleName" />
                                 </div>
                             </div>
                             <div className="col-md-6 ">
                                 <div className="midsection__form">
-                                    <label for="LastName" className="form-label labelFont">Last Name</label>
+                                    <label htmlFor="LastName" className="form-label labelFont">Last Name</label>
                                     <span className="text-danger">*</span>
                                     <input type="text" className="form-control" id="LastName" />
                                 </div>
@@ -159,7 +161,7 @@ export default function GeneralInfo() {
                             </div>
                             <div className="col-md-9 ">
                                 <div className="midsection__form">
-                                    <label for="TagLine" className="form-label labelFont">Tag Line</label>
+                                    <label htmlFor="TagLine" className="form-label labelFont">Tag Line</label>
                                     <input type="text" className="form-control" id="TagLine" />
                                 </div>
                             </div>
@@ -192,7 +194,7 @@ export default function GeneralInfo() {
                                 </div>
                                 <div className="col-md-7 ">
                                     <div className="midsection__form">
-                                        <label for="TagLine" className="form-label labelFont">Tag Line</label>
+                                        <label htmlFor="TagLine" className="form-label labelFont">Tag Line</label>
 
                                         <input type="text" className="form-control" id="TagLine" />
                                     </div>
@@ -226,14 +228,14 @@ export default function GeneralInfo() {
                             <div className="row">
                                 <div className="col-md-6 me-5">
                                     <div className="midsection__form">
-                                        <label for="TagLine" className="form-label labelFont">Mobile Number</label>
+                                        <label htmlFor="TagLine" className="form-label labelFont">Mobile Number</label>
                                         <span className="text-danger">*</span>
                                         <input type="text" className="form-control" id="TagLine" />
                                     </div>
                                 </div>
                                 <div className="col-md-6 mb-4">
                                     <div className="midsection__form">
-                                        <label for="TagLine" className="form-label labelFont">Alternative Number</label>
+                                        <label htmlFor="TagLine" className="form-label labelFont">Alternative Number</label>
                                         <input type="text" className="form-control" id="TagLine" />
                                     </div>
                                 </div>

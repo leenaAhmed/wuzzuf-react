@@ -13,10 +13,9 @@ import Login from './components/registration/login';
 import SignUp from './components/registration/sign-up';
 import Test from './components/test';
 import AuthProvider from './contexts/authContext';
-
-
-
+import Navbar from './components/navbar/navbar';
 import { LanguageProvider } from './contexts/languageContext';
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const [lang, setLang] = useState("English");
@@ -26,12 +25,14 @@ function App() {
       <Router>
         <AuthProvider>
           <LanguageProvider value={{ lang, setLang }}>
-            <Route path="/" exact component={Test} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/sign-up" exact component={SignUp} />
-            <Route path="/forget-password" exact component={ForgetPassword} />
-            <Route path="/profile" component={EditProfile} />
-
+            <Navbar />
+            <Switch>
+              <Route path='/' exact component={Test} />
+              <Route path="/sign-up" exact component={SignUp} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/forget-password" exact component={ForgetPassword} />
+              <Route path="/profile" component={EditProfile} />
+            </Switch>
           </LanguageProvider>
         </AuthProvider>
       </Router>

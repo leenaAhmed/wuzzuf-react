@@ -10,62 +10,62 @@ export default function OnlinePresence() {
                         <h5 className="mb-4">Your Online Presence</h5>
                         <div className="midsection__form">
                             <div className="mb-4 row">
-                                <label for="LinkedIn" className="col-sm-2 form-label text-dark">LinkedIn</label>
+                                <label htmlFor="LinkedIn" className="col-sm-2 form-label text-dark">LinkedIn</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="LinkedIn" placeholder="linkeding.com/in/username" />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label for="Facebook" className="col-sm-2 form-label text-dark">Facebook</label>
+                                <label htmlFor="Facebook" className="col-sm-2 form-label text-dark">Facebook</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Facebook" placeholder="facebook.com/username" />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label for="Twitter" className="col-sm-2 form-label text-dark">Twitter</label>
+                                <label htmlFor="Twitter" className="col-sm-2 form-label text-dark">Twitter</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Twitter" placeholder="twitter.com/username" />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label for="Behance" className="col-sm-2 form-label text-dark" >Behance</label>
+                                <label htmlFor="Behance" className="col-sm-2 form-label text-dark" >Behance</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Behance" placeholder="behance.net.com/username" />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label for="Instagram" className="col-sm-2 form-label text-dark" >Instagram</label>
+                                <label htmlFor="Instagram" className="col-sm-2 form-label text-dark" >Instagram</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Instagram" placeholder="instgram.com/username" />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label for="GitHub" className="col-sm-2 form-label text-dark">GitHub</label>
+                                <label htmlFor="GitHub" className="col-sm-2 form-label text-dark">GitHub</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="GitHub" placeholder="github.com/username" />
                                 </div>
                             </div>
 
                             <div className="mb-4 row">
-                                <label for="YouTube" className="col-sm-2 form-label text-dark">YouTube</label>
+                                <label htmlFor="YouTube" className="col-sm-2 form-label text-dark">YouTube</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="YouTube" placeholder="youtube.com/username" />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label for="Blog" className="col-sm-2 form-label text-dark">Blog</label>
+                                <label htmlFor="Blog" className="col-sm-2 form-label text-dark">Blog</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Blog" placeholder="your blog" />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label for="Website" className="col-sm-2 form-label text-dark">Website</label>
+                                <label htmlFor="Website" className="col-sm-2 form-label text-dark">Website</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Website" placeholder="your personal website" />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label for="Other" className="col-sm-2 form-label text-dark">Other</label>
+                                <label htmlFor="Other" className="col-sm-2 form-label text-dark">Other</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Other" />
                                 </div>

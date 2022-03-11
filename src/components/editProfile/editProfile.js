@@ -1,8 +1,11 @@
-import React from 'react'
-import { Route } from 'react-router-dom'
-import Experience from './experience'
-import GeneralInfo from "./generalInfo"
-import Sidebar from './sidebar'
+import React from 'react';
+import { Route } from 'react-router-dom';
+import Experience from './experience';
+import GeneralInfo from "./generalInfo";
+import Sidebar from './sidebar';
+import LearningInterests from "./learningInterests";
+import OnlinePresence from './onlinePresence';
+import AdditionalInfo from './additionalInfo';
 
 export default function EditProfile() {
     return (
@@ -13,7 +16,9 @@ export default function EditProfile() {
                     <Sidebar />
                     <Route path="/profile/general-info" component={GeneralInfo} />
                     <Route path="/profile/experience" component={Experience} />
-
+                    <Route path="/profile/learning-interests" component={LearningInterests} />
+                    <Route path="/profile/online-presence" component={OnlinePresence} />
+                    <Route path="/profile/additional-info" component={AdditionalInfo} />
                 </div>
             </section>
         </>
