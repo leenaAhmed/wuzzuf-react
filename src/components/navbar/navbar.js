@@ -162,15 +162,15 @@ export default function Navbar() {
               <FontAwesomeIcon icon={faEdit} />
               Edit Profile
             </NavLink>
-            <NavLink to="Career" className="col setting-option">
+            <NavLink to="/Career" className="col setting-option">
               <FontAwesomeIcon icon={faHeart} />      Update career interests
             </NavLink>
             <hr />
-            <NavLink to="Career" className="col setting-option">
+            <NavLink to="/Career" className="col setting-option">
               <FontAwesomeIcon icon={faBookOpen} />
               Career Readings
             </NavLink>
-            <NavLink to="AboutUs" className="col setting-option">
+            <NavLink to="/AboutUs" className="col setting-option">
               <FontAwesomeIcon icon={faBookReader} />
               Learning opportunities
             </NavLink>
@@ -186,7 +186,7 @@ export default function Navbar() {
               <i className="fas fa-envelope"></i>contact Us
             </NavLink>
             <hr />
-            <NavLink to="settings" className="col setting-option">
+            <NavLink to="/settings" className="col setting-option">
               <FontAwesomeIcon icon={faCog} />
               Account settings
             </NavLink>
