@@ -4,7 +4,17 @@ import { Link } from "react-router-dom";
 
 export default function CardHeader(props) {
   const timestampToString = (timestamp) => {
-    return Date(timestamp).toString();
+    // const mydate = new Date(timestamp.toDate());
+    // mydate.toLocaleDateString();
+
+    // var date2 = new Date();
+
+    // var Difference_In_Time = date2.getUTCDate() - mydate.getUTCDate();
+    // console.log(Difference_In_Time);
+
+    // console.log(date2.getUTCDate(), mydate);
+    console.log(timestamp);
+    return 5;
   };
   return (
     <>
@@ -19,8 +29,6 @@ export default function CardHeader(props) {
           <h1 className="title job_title">{props.jobTitle}</h1>
           <div className="btns">
             <span className="fullbtn"> {props.jobType}</span>
-
-            {/* <span className="remotebtn">Remotely during COVID-19</span> */}
           </div>
 
           <strong className="verified-company">
@@ -31,7 +39,7 @@ export default function CardHeader(props) {
           </strong>
 
           <span className="post-time">
-            Posted {timestampToString(props.timestamp)} 2 days ago
+            Posted {timestampToString(props.timestamp)} days ago
           </span>
 
           <div className="green-div">

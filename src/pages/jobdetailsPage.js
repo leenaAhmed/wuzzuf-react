@@ -1,13 +1,13 @@
 import "./style.scss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import JobCard from "./../components/jobModule/jobdetails/details";
 import JobDescription from "./../components/jobModule/jobdetails/description";
 import CardHeader from "./../components/jobModule/jobdetails/header";
 import JobRequirements from "./../components/jobModule/jobdetails/requrment";
-import explorjob from "../config/explorjob";
-
-// import Footer from "./../Footer/footer";
+import explorjob from "../services/explorjob";
+import { languageContext } from "./../contexts/languageContext";
+import Footer from "./../components/footer/index";
 export default function JobDetailsPage(props) {
   let { jobId } = useParams();
   let { companyId } = useParams();
@@ -15,6 +15,9 @@ export default function JobDetailsPage(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [jobDetails, setjobrDetails] = useState({});
   const [showMore, setShowMore] = useState(false);
+
+  const { lang, setLang } = useContext(languageContext);
+
   const loadingdetails = () => {
     explorjob
       .getSingleJob(companyId, jobId)
@@ -36,7 +39,7 @@ export default function JobDetailsPage(props) {
 
   return (
     <>
-      <div className="container mt-5">
+      <div className="container mt-5" dir={lang === "English" ? "ltr" : "rtl"}>
         <div className="row ms-2 me-2">
           <div className="col-md-8 col-lg-8 col-sm-12 rounded">
             {jobDetails === undefined || isLoading === true ? (
@@ -114,7 +117,7 @@ export default function JobDetailsPage(props) {
           )}
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

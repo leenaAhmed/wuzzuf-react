@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import download from "./../../../assets/download.png";
-import saved from "../../../config/saved";
+import saved from "../../../services/saved";
 import "./style.scss";
 
 const ExplorCard = (props) => {
@@ -37,11 +37,9 @@ const ExplorCard = (props) => {
     mydate.toLocaleDateString();
 
     var date2 = new Date();
-
+    console.log(timestamp.seconds);
     var Difference_In_Time = date2.getUTCDate() - mydate.getUTCDate();
     console.log(Difference_In_Time);
-    console.log("firebase", mydate.getUTCDate());
-    console.log("current", date2.getUTCDate());
 
     return Difference_In_Time;
   };
@@ -96,16 +94,16 @@ const ExplorCard = (props) => {
             }`}
             onClick={() => HandleClick(props.id)}
           >
-            <FontAwesomeIcon icon={faBookmark} className="me-1" />
-            Save
+            <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
+            {props.save}
           </button>
           <button className="btn   text-secondary hovering_btn">
-            <FontAwesomeIcon icon={faShare} className="me-1" />
-            Share
+            <FontAwesomeIcon icon={faShare} className="me-1 ms-1" />
+            {props.Share}
           </button>
           <button className="btn   text-secondary hovering_btn">
-            <FontAwesomeIcon icon={faEyeSlash} className="me-1" />
-            Hide
+            <FontAwesomeIcon icon={faEyeSlash} className="me-1 ms-1" />
+            {props.Hide}
           </button>
         </div>
       </div>

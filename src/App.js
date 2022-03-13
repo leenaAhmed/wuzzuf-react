@@ -14,6 +14,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import JobDetailsPage from "./pages/jobdetailsPage";
 import SavedPage from "./pages/savedPage";
 import ApplyToJob from "./components/jobModule/applayToJob/index";
+import AboutUs from "./components/aboutUs/AboutUs";
+import ContactUs from "./components/contactUs/ContactUs";
+import PageAppliction from "./components/jobAppliction/applictionPage";
+
 function App() {
   const [lang, setLang] = useState("English");
 
@@ -39,6 +43,9 @@ function App() {
               <Route path="/login" exact component={Login} />
               <Route path="/forget-password" exact component={ForgetPassword} />
               <Route path="/profile" component={EditProfile} />
+              <Route path="/about-us" component={AboutUs} />
+              <Route path="/contact-us" component={ContactUs} />
+              <Route path="/applications-page" component={PageAppliction} />
             </Switch>
           </LanguageProvider>
         </AuthProvider>

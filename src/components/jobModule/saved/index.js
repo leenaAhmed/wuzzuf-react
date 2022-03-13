@@ -3,11 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 import download from "./../../../assets/download.png";
-import saved from "./../../../config/saved";
-import { useAuth } from "./../../../contexts/authContext";
+import saved from "../../../services/saved";
 const SavedCard = (props) => {
-  const { currentUser } = useAuth();
-  const userId = currentUser.uid;
   const HandleClick = (id) => {
     let jobId = id;
     saved

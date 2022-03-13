@@ -27,8 +27,11 @@ function getSingleJob(companyId, jobId) {
       .doc(`${jobId}`)
       .get()
       .then((response) => {
-        const allacceptedJobs = response.data();
-        resolve(allacceptedJobs);
+        const app = {
+          id: response.id,
+          ...response.data()
+        };
+        resolve(app);
       })
       .catch((error) => {
         reject(error);

@@ -1,12 +1,247 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import './editProfile.scss'
+import { useAuth } from "../../contexts/authContext"
+import { db } from "../../firebase";
+import Select from 'react-select';
+import { toast } from 'react-toastify';
 
 
 export default function GeneralInfo() {
-    const params = useParams()
-    console.log(params.userId);
+    const { currentUser } = useAuth()
+    const [userDetails, setUserDetails] = useState({});
+    const dayOptions = displayDaysInSelect()
+    const monthOptions = displayMonthInSelect()
+    const yearOptions = displayYearInSelect()
+    const militaryStatus = [
+        { value: 'not applicable', label: 'Not Applicable' },
+        { value: 'exempted', label: 'Exempted' },
+        { value: 'completed', label: 'Completed' },
+        { value: 'postponed', label: 'Postponed' },
+    ]
+
+    //get user details according to auth
+    useEffect(() => {
+        if (currentUser) {
+            const userId = currentUser.uid
+            // console.log(userId);
+            db.collection("users").doc(userId).get().then(snapshot => {
+                if (snapshot.exists) {
+                    setUserDetails(snapshot.data())
+                }
+            })
+        }
+    }, [currentUser])
+
+    console.log(userDetails);
+
+    const firstNameChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                firstName: event.target.value
+            }
+        })
+    }
+
+    const lastNameChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                lastName: event.target.value
+            }
+        })
+    }
+
+    const middleNameChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                middleName: event.target.value
+            }
+        })
+    }
+
+    const genderChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                gender: event.target.value
+            }
+        })
+    }
+
+    const militaryChangeHandler = (selectedOption) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                militarySatus: selectedOption.value
+            }
+        })
+    }
+
+    const dayChangeHandler = (selectedOption) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                birthDate: {
+                    ...prevState.birthDate,
+                    day: selectedOption.value
+                }
+            }
+        })
+    }
+
+    const monthChangeHandler = (selectedOption) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                birthDate: {
+                    ...prevState.birthDate,
+                    month: selectedOption.value
+                }
+            }
+        })
+    }
+
+    const yearChangeHandler = (selectedOption) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                birthDate: {
+                    ...prevState.birthDate,
+                    year: selectedOption.value
+                }
+            }
+        })
+    }
+
+    function displayDaysInSelect() {
+        const dayOptions = [];
+        for (let i = 1; i <= 31; i++) {
+            dayOptions.push({
+                value: i, label: i
+            })
+        }
+        return dayOptions
+    }
+
+    function displayMonthInSelect() {
+        var months = ["January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"];
+
+        let monthOption = [];
+        months.map((month) => {
+            monthOption.push({
+                value: month, label: month
+            })
+        })
+
+        return monthOption
+    }
+
+    function displayYearInSelect() {
+        let yearOption = []
+        for (let i = 2012; i >= 1990; i--) {
+            yearOption.push({
+                value: i, label: i
+            })
+        }
+        return yearOption
+
+    }
+
+    const mobileNoChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                mobile: event.target.value
+            }
+        })
+    }
+
+    const altMobileNoChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                altMobile: event.target.value
+            }
+        })
+    }
+
+    const maritalStatusChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                maritalStatus: event.target.value
+            }
+        })
+    }
+
+    const drivingLicenseChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                drivingLicense: event.target.value
+            }
+        })
+    }
+
+    const carOwnChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                carOwn: event.target.value
+            }
+        })
+    }
+
+    const tagLineChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                title: event.target.value
+            }
+        })
+    }
+
+    const relocationChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                relocation: event.target.value
+            }
+        })
+    }
+
+    const postalCodeChangeHandler = (event) => {
+        setUserDetails((prevState) => {
+            return {
+                ...prevState,
+                postalCode: event.target.value
+            }
+        })
+    }
+
+
+    const submitHandler = (event) => {
+        event.preventDefault();
+        if (currentUser) {
+            const userId = currentUser.uid
+
+            db.collection("users").doc(userId)
+                .set(userDetails).then(() => {
+                    console.log(userDetails);
+                }).then(() => {
+                    toast.success("general info updated succesfully !", {
+                        position: toast.POSITION.TOP_LEFT
+                    })
+                })
+        }
+    }
+
+
+
+
     return (<>
         <article className="col-lg-8 col-md-12">
             <div className="row">
@@ -18,20 +253,37 @@ export default function GeneralInfo() {
                                 <div className="midsection__form">
                                     <label htmlFor="FirstName" className="form-label labelFont">First Name</label>
                                     <span className="text-danger">*</span>
-                                    <input type="text" className="form-control" id="FirstName" />
+                                    <input type="text"
+                                        className="form-control"
+                                        id="FirstName"
+                                        value={userDetails.firstName ? userDetails.firstName : ""}
+                                        onChange={firstNameChangeHandler}
+                                    />
                                 </div>
                             </div>
+
                             <div className="col-md-6">
                                 <div className="midsection__form">
                                     <label htmlFor="MiddleName" className="form-label">Middle Name</label>
-                                    <input type="text" className="form-control" id="MiddleName" />
+                                    <input type="text"
+                                        className="form-control"
+                                        id="MiddleName"
+                                        value={userDetails.middleName ? userDetails.middleName : ""}
+                                        onChange={middleNameChangeHandler}
+                                    />
                                 </div>
                             </div>
+
                             <div className="col-md-6 ">
                                 <div className="midsection__form">
                                     <label htmlFor="LastName" className="form-label labelFont">Last Name</label>
                                     <span className="text-danger">*</span>
-                                    <input type="text" className="form-control" id="LastName" />
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="LastName"
+                                        value={userDetails.lastName ? userDetails.lastName : ""}
+                                        onChange={lastNameChangeHandler} />
                                 </div>
                             </div>
 
@@ -40,129 +292,135 @@ export default function GeneralInfo() {
                                     <label className="col-form-label form-label">Birthday</label>
                                     <span className="text-danger">*</span>
                                     <div className="row">
-                                        <div className="col-md-2">
-                                            <select className="form-select" id="Military"
-                                                aria-label="Disabled select example">
-                                                <option disabled selected>Select..</option>
-                                            </select>
+                                        <div className="col-md-4">
+                                            <Select className='w-100'
+                                                options={dayOptions}
+                                                placeholder={userDetails.birthDate ? userDetails.birthDate.day : "day"}
+                                                onChange={dayChangeHandler}
+                                                noOptionsMessage="day"
+                                            />
                                         </div>
-                                        <div className="col-md-5">
-                                            <select className="form-select" id="Military"
-                                                aria-label="Disabled select example">
-                                                <option disabled selected>Select..</option>
-                                            </select>
+                                        <div className="col-md-4">
+                                            <Select className='w-100'
+                                                options={monthOptions}
+                                                placeholder={userDetails.birthDate ? userDetails.birthDate.month : "month"}
+                                                onChange={monthChangeHandler}
+                                                noOptionsMessage="month"
+                                            />
                                         </div>
-                                        <div className="col-md-5">
-                                            <select className="form-select" id="Military"
-                                                aria-label="Disabled select example">
-                                                <option disabled selected>Select..</option>
-                                            </select>
+                                        <div className="col-md-4">
+                                            <Select className='w-100'
+                                                options={yearOptions}
+                                                placeholder={userDetails.birthDate ? userDetails.birthDate.year : "year"}
+                                                onChange={yearChangeHandler}
+                                                noOptionsMessage="year"
+                                            />
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
+
                             <div className="col-md-12 ">
                                 <div className="midsection__form">
                                     <label className="col-form-label form-label">Gender</label>
                                     <div className="form-check">
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="Gender" id="Male"
-                                                value="Male" />
+                                                value="male" checked={userDetails.gender === "male"} onChange={genderChangeHandler} />
                                             Male
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="Gender" id="Female"
-                                                value="Female" />
+                                                value="female" checked={userDetails.gender === "female"} onChange={genderChangeHandler} />
                                             Female
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-7 ">
-                                <div className="midsection__form">
-                                    <label className="col-form-label form-label">Number of Dependents</label>
-                                    <select className="form-select  " id="Dependents"
-                                        aria-label="Disabled select example">
-                                        <option disabled selected>Select..</option>
 
-                                    </select>
-                                </div>
-                            </div>
                             <div className="col-md-7 ">
                                 <div className="midsection__form">
                                     <label className="col-form-label form-label">Military Status</label>
-                                    <select className="form-select  " id="Military"
-                                        aria-label="Disabled select example">
-                                        <option disabled selected>Select..</option>
-                                        <option value="Not Applicable">Not Applicable</option>
-                                        <option value="Exempted">Exempted</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="Postponed">Postponed</option>
-                                    </select>
+                                    <Select className='w-100'
+                                        options={militaryStatus}
+                                        placeholder={userDetails.militarySatus}
+                                        onChange={militaryChangeHandler}
+                                    />
                                 </div>
                             </div>
+
                             <div className="col-md-12 ">
                                 <div className="midsection__form">
                                     <label className="col-form-label form-label">Marital Status</label>
-                                    <div className="form-check">
+                                    <div className="form-check" onChange={maritalStatusChangeHandler}>
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="MaritalStatus"
-                                                id="unspecified" value="unspecified" />
+                                                id="unspecified" value="unspecified"
+                                                checked={userDetails.maritalStatus === "unspecified"}
+                                            />
                                             Unspecified
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="MaritalStatus"
-                                                id="single" value="single" />
+                                                id="single" value="single"
+                                                checked={userDetails.maritalStatus === "single"} />
                                             Single
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="MaritalStatus"
-                                                id="married" value="married" />
+                                                id="married" value="married"
+                                                checked={userDetails.maritalStatus === "married"} />
                                             Married
                                         </label>
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-md-6 ">
                                 <div className="midsection__form">
                                     <label className="col-form-label form-label">Do you have a driving license?</label>
-                                    <div className="form-check">
+                                    <div className="form-check" onChange={drivingLicenseChangeHandler}>
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="license" id="Yes"
-                                                value="Yes" />
+                                                value="yes" checked={userDetails.drivingLicense === "yes"} />
                                             Yes
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="license" id="No"
-                                                value="No" />
+                                                value="no" checked={userDetails.drivingLicense === "no"} />
                                             No
                                         </label>
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-md-4 ">
                                 <div className="midsection__form">
                                     <label className="col-form-label form-label">Do you have a car?</label>
                                     <div className="form-check">
-                                        <label className="form-check-label">
+                                        <label className="form-check-label" >
                                             <input type="radio" className="form-check-input" name="Car" id="Yes"
-                                                value="Male" />
+                                                value="yes"
+                                                checked={userDetails.carOwn === "yes"} onChange={carOwnChangeHandler} />
                                             Yes
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="Car" id="No"
-                                                value="No" />
+                                                value="no" onChange={carOwnChangeHandler}
+                                                checked={userDetails.carOwn === "no"} />
                                             No
                                         </label>
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-md-9 ">
                                 <div className="midsection__form">
                                     <label htmlFor="TagLine" className="form-label labelFont">Tag Line</label>
-                                    <input type="text" className="form-control" id="TagLine" />
+                                    <input type="text" className="form-control" id="TagLine"
+                                        onChange={tagLineChangeHandler}
+                                        value={userDetails.title ? userDetails.title : ""}
+                                    />
                                 </div>
                             </div>
                         </form>
@@ -175,7 +433,7 @@ export default function GeneralInfo() {
                                     <div className="midsection__form">
                                         <label className="col-form-label form-label">Country <span
                                             className="text-danger">*</span></label>
-                                        <select className="form-select mb-2" id="Country"
+                                        {/* <select className="form-select mb-2" id="Country"
                                             aria-label="Disabled select example">
                                             <option disabled selected>Select..</option>
                                         </select>
@@ -188,17 +446,21 @@ export default function GeneralInfo() {
                                         <label className="col-form-label form-label">Area</label>
                                         <select className="form-select" id="Area" aria-label="Disabled select example">
                                             <option disabled selected>Select..</option>
-                                        </select>
+                                        </select> */}
 
                                     </div>
                                 </div>
+
                                 <div className="col-md-7 ">
                                     <div className="midsection__form">
-                                        <label htmlFor="TagLine" className="form-label labelFont">Tag Line</label>
-
-                                        <input type="text" className="form-control" id="TagLine" />
+                                        <label htmlFor="postalCode" className="form-label labelFont">Postal Code</label>
+                                        <input type="text" className="form-control" id="postalCode"
+                                            onChange={postalCodeChangeHandler}
+                                            value={userDetails.postalCode ? userDetails.postalCode : ""}
+                                        />
                                     </div>
                                 </div>
+
                                 <div className="col-md-12 ">
                                     <div className="midsection__form">
                                         <label className="col-form-label form-label">Would you be willing to relocate to
@@ -206,12 +468,12 @@ export default function GeneralInfo() {
                                         <div className="form-check">
                                             <label className="form-check-label">
                                                 <input type="radio" className="form-check-input" name="opportunity"
-                                                    id="Yes" value="Male" />
+                                                    id="Yes" value="yes" checked={userDetails.relocation === "yes"} onChange={relocationChangeHandler} />
                                                 Yes
                                             </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                             <label className="form-check-label">
-                                                <input type="radio" className="form-check-input" name="opportunity"
-                                                    id="No" value="No" />
+                                                <input type="radio" checked={userDetails.relocation === "no"} onChange={relocationChangeHandler} className="form-check-input" name="opportunity"
+                                                    id="No" value="no" />
                                                 No
                                             </label>
                                         </div>
@@ -230,19 +492,23 @@ export default function GeneralInfo() {
                                     <div className="midsection__form">
                                         <label htmlFor="TagLine" className="form-label labelFont">Mobile Number</label>
                                         <span className="text-danger">*</span>
-                                        <input type="text" className="form-control" id="TagLine" />
+                                        <input type="text" onChange={mobileNoChangeHandler}
+                                            value={userDetails.mobile ? userDetails.mobile : ""}
+                                            className="form-control" id="TagLine" />
                                     </div>
                                 </div>
                                 <div className="col-md-6 mb-4">
                                     <div className="midsection__form">
                                         <label htmlFor="TagLine" className="form-label labelFont">Alternative Number</label>
-                                        <input type="text" className="form-control" id="TagLine" />
+                                        <input type="text" onChange={altMobileNoChangeHandler}
+                                            value={userDetails.altMobile ? userDetails.altMobile : ""}
+                                            className="form-control" id="TagLine" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary mb-2">Save Changes</button>
+                    <button onClick={submitHandler} type="submit" className="btn btn-primary mb-2">Save Changes</button>
                 </div>
             </div>
         </article>
