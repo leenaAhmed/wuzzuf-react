@@ -1,7 +1,16 @@
 import React from 'react'
+import { useAuth } from "./../contexts/authContext";
 
-export default function Test() {
+ function Test() {
+  const {currentUser}=useAuth()
+
+ 
   return (
-    <div>Test</div>
-  )
+    <>
+    <div>{currentUser.uid}</div>
+    <div>{currentUser.email}</div>
+   
+    
+    </>)
 }
+export default Test;

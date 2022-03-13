@@ -1,5 +1,6 @@
 import { current } from "@reduxjs/toolkit";
 import React, { useContext, useRef, useState } from "react"
+import { useHistory } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { languageContext } from "../../contexts/languageContext";
@@ -9,6 +10,7 @@ function SignUp() {
     const firstNameRef = useRef()
     const lastNameRef = useRef()
     const passwordRef = useRef()
+    const history=useHistory()
     const { signUp, currentUser } = useAuth()
     const { lang, setLang } = useContext(languageContext)
 
@@ -17,6 +19,7 @@ function SignUp() {
         try {
             setError("")
             await signUp(emailRef.current.value, passwordRef.current.value)
+            history.push("/")
         }
         catch (error) {
             lang == "English" ? setError(error.message) : setError("من فضلك ادخل البيانات بالشكل الصحيح")
