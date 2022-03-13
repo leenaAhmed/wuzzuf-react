@@ -86,7 +86,7 @@ export default function Navbar() {
                       <NavLink to="/saved">saved</NavLink>
                     </li>
                     <li className="d-inline-flex">
-                      <NavLink to="/application">applications</NavLink>
+                      <NavLink to="/applications-page">applications</NavLink>
                     </li>
                   </ul>
                 </nav>
@@ -158,39 +158,38 @@ export default function Navbar() {
           </div>
           <hr />
           <div className="row row-cols-1 setting-links" id="setting_links">
-            <NavLink to={`/profile/general-info/`} className="col setting-option">
+            <NavLink to={`/profile/general-info/`} className="col setting-option" onClick={() => toggleShownClass()}>
               <FontAwesomeIcon icon={faEdit} />
               Edit Profile
             </NavLink>
-            <NavLink to="/Career" className="col setting-option">
+            <NavLink to="/Career" className="col setting-option" onClick={() => toggleShownClass()}>
               <FontAwesomeIcon icon={faHeart} />      Update career interests
             </NavLink>
             <hr />
-            <NavLink to="/Career" className="col setting-option">
+            <NavLink to="/Career" className="col setting-option" onClick={() => toggleShownClass()}>
               <FontAwesomeIcon icon={faBookOpen} />
               Career Readings
             </NavLink>
-            <NavLink to="/AboutUs" className="col setting-option">
+            <NavLink to="/AboutUs" className="col setting-option" onClick={() => toggleShownClass()}>
               <FontAwesomeIcon icon={faBookReader} />
               Learning opportunities
             </NavLink>
             <hr />
-            <NavLink to="/AboutUs" className="col setting-option">
+            <NavLink to="/about-us" className="col setting-option" onClick={() => toggleShownClass()}>
               <FontAwesomeIcon icon={faHandsHelping} />
 
               About us
             </NavLink>
-            <NavLink to={`/ContactUs/`} className="col setting-option">
+            <NavLink to={`/contact-us`} className="col setting-option" onClick={() => toggleShownClass()}>
               <FontAwesomeIcon icon={faEnvelope} />
-
-              <i className="fas fa-envelope"></i>contact Us
+              contact Us
             </NavLink>
             <hr />
-            <NavLink to="/settings" className="col setting-option">
+            <NavLink to="/settings" className="col setting-option" onClick={() => toggleShownClass()}>
               <FontAwesomeIcon icon={faCog} />
               Account settings
             </NavLink>
-            <Link className="col setting-option" onClick={handleLogOut}>
+            <Link className="col setting-option" onClick={()=>{handleLogOut (); toggleShownClass()}}>
               logout
             </Link>
           </div>
