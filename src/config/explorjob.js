@@ -1,0 +1,40 @@
+import app from "../firebase";
+const db = app.firestore();
+
+function getAlljobs() {
+  return new Promise((resolve, reject) => {
+    db.collectionGroup("jobs")
+      .where("status", "==", "ACCEPTED")
+      .get()
+      .then((allJobs) => {
+        const allacceptedJobs = allJobs.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+          companyId: doc.data().companyID
+        }));
+        resolve(allacceptedJobs);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+function getSingleJob(companyId, jobId) {
+  return new Promise((resolve, reject) => {
+    db.collection("company")
+      .doc(`${companyId}`)
+      .collection("jobs")
+      .doc(`${jobId}`)
+      .get()
+      .then((response) => {
+        const allacceptedJobs = response.data();
+        resolve(allacceptedJobs);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default { getAlljobs, getSingleJob };
