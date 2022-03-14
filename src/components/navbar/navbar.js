@@ -1,8 +1,8 @@
 import "./navbar.scss";
 import { NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAuth } from "../../contexts/authContext"
+import { useAuth } from "../../contexts/authContext";
 import { db } from "../../firebase";
 
 import {
@@ -12,30 +12,35 @@ import {
   faBookReader,
   faHandsHelping,
   faEnvelope,
-  faCog, faBars,
+  faCog,
+  faBars,
+  faThin,
+  faGlobe,
   faSearch
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { languageContext } from "./../../contexts/languageContext";
 
 export default function Navbar() {
-
   //nav bar class showen state
   const [menueShowen, setmenueShowen] = useState(" ");
-  const { currentUser, logout } = useAuth()
+  const { currentUser, logout } = useAuth();
   const [userDetails, setUserDetails] = useState({});
-  const history = useHistory()
+  const history = useHistory();
 
   //toggle class showen function in drop down menue in nav
   const toggleShownClass = () => {
     setmenueShowen(menueShowen === "" ? "profile-settings-menue-showed" : "");
   };
 
+  // language
+  const { lang, setLang } = useContext(languageContext);
 
   //get user details according to auth
   useEffect(() => {
     if (currentUser) {
-      const userId = currentUser.uid
+      const userId = currentUser.uid;
       console.log(userId);
       db.collection("users").doc(userId).onSnapshot((doc) => {
         if (doc.exists) {
@@ -43,20 +48,19 @@ export default function Navbar() {
         }
       })
     }
-  }, [currentUser])
-
+  }, [currentUser]);
 
   //logut
   async function handleLogOut() {
     try {
       await logout().then(() => {
-        history.push("/login")
-      })
+        localStorage.removeItem("uid")
+        history.push("/login");
+      });
     } catch {
       console.log("faile to logout");
     }
   }
-
 
   return (
     <div>
@@ -87,7 +91,16 @@ export default function Navbar() {
                       <NavLink to="/saved">saved</NavLink>
                     </li>
                     <li className="d-inline-flex">
-                      <NavLink to="/application">applications</NavLink>
+                      <NavLink to="/applications-page">applications</NavLink>
+                    </li>
+                    <li className="d-inline-flex">
+                      <FontAwesomeIcon
+                        icon={faGlobe}
+                        className="text-dark"
+                        onClick={() => {
+                          setLang(lang == "English" ? "العربية" : "English");
+                        }}
+                      />
                     </li>
                   </ul>
                 </nav>
@@ -125,7 +138,6 @@ export default function Navbar() {
                       alt=""
                     />
                     <FontAwesomeIcon className="menue-btn" icon={faBars} />
-
                   </div>
                 </div>
               </div>
@@ -156,39 +168,71 @@ export default function Navbar() {
           </div>
           <hr />
           <div className="row row-cols-1 setting-links" id="setting_links">
-            <NavLink to="/profile/general-info/" className="col setting-option">
+            <NavLink
+              to={`/profile/general-info/`}
+              className="col setting-option"
+              onClick={() => toggleShownClass()}
+            >
               <FontAwesomeIcon icon={faEdit} />
               Edit Profile
             </NavLink>
-            <NavLink to="/Career" className="col setting-option">
-              <FontAwesomeIcon icon={faHeart} />      Update career interests
+            <NavLink
+              to="/Career"
+              className="col setting-option"
+              onClick={() => toggleShownClass()}
+            >
+              <FontAwesomeIcon icon={faHeart} /> Update career interests
             </NavLink>
             <hr />
-            <NavLink to="/Career" className="col setting-option">
+            <NavLink
+              to="/Career"
+              className="col setting-option"
+              onClick={() => toggleShownClass()}
+            >
               <FontAwesomeIcon icon={faBookOpen} />
               Career Readings
             </NavLink>
-            <NavLink to="/AboutUs" className="col setting-option">
+            <NavLink
+              to="/AboutUs"
+              className="col setting-option"
+              onClick={() => toggleShownClass()}
+            >
               <FontAwesomeIcon icon={faBookReader} />
               Learning opportunities
             </NavLink>
             <hr />
-            <NavLink to="/AboutUs" className="col setting-option">
+            <NavLink
+              to="/about-us"
+              className="col setting-option"
+              onClick={() => toggleShownClass()}
+            >
               <FontAwesomeIcon icon={faHandsHelping} />
-
               About us
             </NavLink>
-            <NavLink to={`/ContactUs/`} className="col setting-option">
+            <NavLink
+              to={`/contact-us`}
+              className="col setting-option"
+              onClick={() => toggleShownClass()}
+            >
               <FontAwesomeIcon icon={faEnvelope} />
-
-              <i className="fas fa-envelope"></i>contact Us
+              contact Us
             </NavLink>
             <hr />
-            <NavLink to="/settings" className="col setting-option">
+            <NavLink
+              to="/settings"
+              className="col setting-option"
+              onClick={() => toggleShownClass()}
+            >
               <FontAwesomeIcon icon={faCog} />
               Account settings
             </NavLink>
-            <Link className="col setting-option" onClick={handleLogOut}>
+            <Link
+              className="col setting-option"
+              onClick={() => {
+                handleLogOut();
+                toggleShownClass();
+              }}
+            >
               logout
             </Link>
           </div>
