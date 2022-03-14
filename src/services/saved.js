@@ -6,9 +6,9 @@ const user = auth.auth().currentUser;
 let userId;
 if (!user) {
   userId = "";
-  userId = user.uid;
+  // userId = user.uid;
 } else {
-  userId = user.uid;
+  // userId = user.uid;
 }
 
 function addJobtoSavedPage(

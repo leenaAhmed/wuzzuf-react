@@ -94,7 +94,7 @@ export default function Navbar() {
                     <li className="d-inline-flex">
                       <NavLink to="/applications-page">applications</NavLink>
                     </li>
-                    <li className="d-inline-flex">
+                    <li className="d-inline-flex mt-2">
                       <FontAwesomeIcon
                         icon={faGlobe}
                         className="text-dark"
