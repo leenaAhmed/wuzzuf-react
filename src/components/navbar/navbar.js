@@ -26,6 +26,7 @@ export default function Navbar() {
   const [menueShowen, setmenueShowen] = useState(" ");
   const { currentUser, logout } = useAuth();
   const [userDetails, setUserDetails] = useState({});
+  const [SearchTerm, SetSearchTerm] = useState("");
   const history = useHistory();
 
   //toggle class showen function in drop down menue in nav
@@ -94,7 +95,7 @@ export default function Navbar() {
                     <li className="d-inline-flex">
                       <NavLink to="/applications-page">applications</NavLink>
                     </li>
-                    <li className="d-inline-flex">
+                    <li className="d-inline-flex mt-2">
                       <FontAwesomeIcon
                         icon={faGlobe}
                         className="text-dark"
@@ -119,6 +120,10 @@ export default function Navbar() {
                           placeholder="Search jobs, companies.."
                           aria-label="Recipient's username"
                           aria-describedby="basic-addon2"
+                          onChange={(event) => {
+                            SetSearchTerm(event.target.value);
+                            console.log(event.target.value);
+                          }}
                         />
                         <Link to="/search">
                           <span className="input-group-text" id="basic-addon2">

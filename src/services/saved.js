@@ -7,7 +7,7 @@ let userId;
 if (!user) {
   userId = localStorage.getItem("uid");
 } else {
-  userId = user.uid;
+  // userId = user.uid;
 }
 
 function addJobtoSavedPage(
