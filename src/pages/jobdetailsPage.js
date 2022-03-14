@@ -16,7 +16,7 @@ export default function JobDetailsPage(props) {
   const [jobDetails, setjobrDetails] = useState({});
   const [showMore, setShowMore] = useState(false);
 
-  const { lang, setLang } = useContext(languageContext);
+  const { lang } = useContext(languageContext);
 
   const loadingdetails = () => {
     explorjob

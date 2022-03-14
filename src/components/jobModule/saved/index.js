@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 import download from "./../../../assets/download.png";
 import saved from "../../../services/saved";
@@ -10,10 +11,14 @@ const SavedCard = (props) => {
     saved
       .deletSavedJob(jobId)
       .then(() => {
-        alert("delete");
+        toast.success("saved delted succesfully !", {
+          position: toast.POSITION.TOP_LEFT
+        });
       })
       .catch((err) => {
-        alert("error");
+        toast.error(err.message, {
+          position: toast.POSITION.TOP_LEFT
+        });
       });
   };
   return (

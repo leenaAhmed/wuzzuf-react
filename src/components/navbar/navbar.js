@@ -14,7 +14,6 @@ import {
   faEnvelope,
   faCog,
   faBars,
-  faThin,
   faGlobe,
   faSearch
 } from "@fortawesome/free-solid-svg-icons";
@@ -42,11 +41,13 @@ export default function Navbar() {
     if (currentUser) {
       const userId = currentUser.uid;
       console.log(userId);
-      db.collection("users").doc(userId).onSnapshot((doc) => {
-        if (doc.exists) {
-          setUserDetails(doc.data())
-        }
-      })
+      db.collection("users")
+        .doc(userId)
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            setUserDetails(doc.data());
+          }
+        });
     }
   }, [currentUser]);
 
@@ -54,7 +55,7 @@ export default function Navbar() {
   async function handleLogOut() {
     try {
       await logout().then(() => {
-        localStorage.removeItem("uid")
+        localStorage.removeItem("uid");
         history.push("/login");
       });
     } catch {
@@ -98,7 +99,7 @@ export default function Navbar() {
                         icon={faGlobe}
                         className="text-dark"
                         onClick={() => {
-                          setLang(lang == "English" ? "العربية" : "English");
+                          setLang(lang === "English" ? "العربية" : "English");
                         }}
                       />
                     </li>
@@ -119,9 +120,11 @@ export default function Navbar() {
                           aria-label="Recipient's username"
                           aria-describedby="basic-addon2"
                         />
-                        <span className="input-group-text" id="basic-addon2">
-                          <FontAwesomeIcon icon={faSearch} />
-                        </span>
+                        <Link to="/search">
+                          <span className="input-group-text" id="basic-addon2">
+                            <FontAwesomeIcon icon={faSearch} />
+                          </span>
+                        </Link>
                       </div>
                     </form>
                   </div>
@@ -134,7 +137,11 @@ export default function Navbar() {
                   >
                     <img
                       className="img-fluid nav-profile-img img-thumbnail rounded-circle"
-                      src={userDetails.imageUrl ? userDetails.imageUrl : "/default.png"}
+                      src={
+                        userDetails.imageUrl
+                          ? userDetails.imageUrl
+                          : "/default.png"
+                      }
                       alt=""
                     />
                     <FontAwesomeIcon className="menue-btn" icon={faBars} />
@@ -151,16 +158,23 @@ export default function Navbar() {
           id="setting_menue"
         >
           <div className="row profile-info setting-option">
-            <a className="col-3 img-container">
+            <a href className="col-3 img-container">
               <img
                 className="img-fluid rounded-circle dropdown-img"
-                src={userDetails.imageUrl ? userDetails.imageUrl : "/default.png"}
+                src={
+                  userDetails.imageUrl ? userDetails.imageUrl : "/default.png"
+                }
                 alt="avatar"
               />
             </a>
             <div className="col-9">
-              <NavLink to="/profile/general-info/" className="view-profile d-flex flex-column">
-                <span className="h5 user-name">{userDetails.firstName + " " + userDetails.lastName}</span>
+              <NavLink
+                to="/profile/general-info/"
+                className="view-profile d-flex flex-column"
+              >
+                <span className="h5 user-name">
+                  {userDetails.firstName + " " + userDetails.lastName}
+                </span>
                 <span className="email">{userDetails.email}</span>
                 <span className="view-profile-link">View profile</span>
               </NavLink>

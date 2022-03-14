@@ -1,0 +1,51 @@
+
+ .sidebar {
+    // @extend %sections;
+     
+    .list-group {
+        border: 0;
+        border-radius: 0;
+
+
+        a {
+            text-decoration: none;
+            color: rgba(0, 0, 0, 0.8);
+
+        }
+
+        .list-group-itemx {
+            cursor: pointer;
+            // height: 50px;
+            list-style: none;
+            margin-left: 10px;
+            margin-top: 5px;
+          
+            border: none;
+            border-bottom:1px solid #ebedf0;
+
+            &:hover {
+                background: #f7faff;
+
+            }
+        }
+        .list-height{
+            height: 100px;
+        }
+       
+
+       
+    }
+
+    .sidebar__fonts {
+        margin: 20px;
+
+        h6 {
+            font-weight: 700;
+        }
+
+        p {
+            color: grey;
+            font-size: 14px;
+        }
+    }
+}
