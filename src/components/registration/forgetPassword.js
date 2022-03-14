@@ -17,14 +17,16 @@ function ForgetPassword() {
 
     const [formError, setFormError] = useState("")
     const [error, setError] = useState("")
+    const [email, setEmail] = useState("")
     const history = useHistory()
 
     const handleError = (e) => {
 
         if (e.target.name == "email") {
+            setEmail(e.target.value)
             if (emailRef.current.value == "") {
-                lang == "English" ? setFormError("Email is Required") :
-                    setFormError("يجب ادخال ايميل المستخدم")
+                 setFormError("Email is Required") 
+                    
             } else {
                 setFormError("")
             }
@@ -34,7 +36,7 @@ function ForgetPassword() {
         e.preventDefault()
         try {
             await resetPassword(emailRef.current.value)
-            toast.success(`${lang == "English" ? 'Check Your Mail' : 'راجع بريدك الالكتروني'}`, {
+            toast.success(` Check Your Mail `, {
                 position: "top-center",
                 hideProgressBar: true,
                 autoClose: 2000,
@@ -45,8 +47,8 @@ function ForgetPassword() {
             }, 1500)
 
         } catch (error) {
-            lang == "English" ? setError(error.message) :
-                setError("من فضلك ادخل البيانات بالشكل الصحيح")
+             setError("Email is Not Exist") 
+                
 
         }
 
@@ -71,12 +73,14 @@ function ForgetPassword() {
 
                                                     <div className="mt-2">
                                                         <label htmlFor="exampleInputEmail1" className=" form-label">Enter Your Email</label>
-                                                        <input type="text" name="email" onChange={handleError} ref={emailRef} className="form-control" id="exampleInputEmail1"
+                                                        <input type="text" name="email" onBlur={handleError} onChange={handleError}
+                                                     
+                                                        ref={emailRef} className="form-control" id="exampleInputEmail1"
                                                         />
                                                         <span className="text-danger mt-2">{formError}</span>
                                                     </div>
 
-                                                    <button type="submit" disabled={formError != ""} className="btn btn-primary mt-2 w-100">Reset</button>
+                                                    <button type="submit" disabled={formError != ""|| email==""} className="btn btn-primary mt-2 w-100">Reset</button>
                                                 </form>
 
                                                 <hr />
