@@ -1,12 +1,17 @@
 import app from "../firebase";
 import auth from "../firebase";
 
+
 const db = app.firestore();
 const user = auth.auth().currentUser;
 let userId;
 if (!user) {
   userId = "";
+<<<<<<< HEAD
   // userId = user.uid;
+=======
+  // userId = user.uid
+>>>>>>> f34f88e7c34d77997494b21add7b443245946c74
 } else {
   // userId = user.uid;
 }

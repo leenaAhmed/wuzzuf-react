@@ -10,17 +10,17 @@ import AuthProvider from "./contexts/authContext";
 import Navbar from "./components/navbar/navbar";
 import { LanguageProvider } from "./contexts/languageContext";
 import ExplorPage from "./pages/explorPage";
-import PrivateRoute from "./components/PrivateRoute";
 import JobDetailsPage from "./pages/jobdetailsPage";
 import SavedPage from "./pages/savedPage";
 import ApplyToJob from "./components/jobModule/applayToJob/index";
 import AboutUs from "./components/aboutUs/AboutUs";
 import ContactUs from "./components/contactUs/ContactUs";
 import PageAppliction from "./components/jobAppliction/applictionPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginProtectedRoute from "./components/loginProtectedRoute";
 
 function App() {
   const [lang, setLang] = useState("English");
-
   return (
     <>
       <Router>
@@ -28,7 +28,7 @@ function App() {
           <LanguageProvider value={{ lang, setLang }}>
             <Navbar />
             <Switch>
-              <Route path="/" exact component={ExplorPage} />
+              <ProtectedRoute path="/" exact component={ExplorPage} />
               <Route
                 path="/jopdetails/:companyId/:jobId"
                 component={JobDetailsPage}
@@ -39,9 +39,9 @@ function App() {
                 exact
                 component={ApplyToJob}
               />
-              <Route path="/sign-up" exact component={SignUp} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/forget-password" exact component={ForgetPassword} />
+              <LoginProtectedRoute path="/sign-up" exact component={SignUp} />
+              <LoginProtectedRoute path="/login" exact component={Login} />
+              <LoginProtectedRoute path="/forget-password" exact component={ForgetPassword} />
               <Route path="/profile" component={EditProfile} />
               <Route path="/about-us" component={AboutUs} />
               <Route path="/contact-us" component={ContactUs} />

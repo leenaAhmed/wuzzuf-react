@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './editProfile.scss'
 import { useAuth } from "../../contexts/authContext"
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 
@@ -19,14 +19,19 @@ export default function GeneralInfo() {
         { value: 'postponed', label: 'Postponed' },
     ]
 
+    const [progress, setProgress] = useState(0)
+    const [image, setImage] = useState("")
+    const fileRef = useRef(null);
+    console.log(currentUser);
+
     //get user details according to auth
     useEffect(() => {
         if (currentUser) {
             const userId = currentUser.uid
             // console.log(userId);
-            db.collection("users").doc(userId).get().then(snapshot => {
-                if (snapshot.exists) {
-                    setUserDetails(snapshot.data())
+            db.collection("users").doc(userId).onSnapshot((doc) => {
+                if (doc.exists) {
+                    setUserDetails(doc.data())
                 }
             })
         }
@@ -222,6 +227,70 @@ export default function GeneralInfo() {
         })
     }
 
+    const imageChangeHandler = (event) => {
+        if (event.target.files[0]) {
+            setImage(event.target.files[0])
+        }
+    }
+
+
+    async function uploadImage(e) {
+        e.preventDefault()
+        if (!image) return;
+        const storageRef = storage.ref(`/users/${currentUser?.uid}`).child(image.name)
+        const colllectionRef = db.collection("users")
+
+        const uploadTask = storageRef.put(image)
+
+        uploadTask.on("state_changed", (snapshot) => {
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+            setProgress(progress)
+
+        }, (err) => {
+            console.log(err)
+        },
+            () => {
+                // Upload completed successfully, now we can get the download URL
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    setProgress("uploaded succesfully")
+                    if (currentUser) {
+                        colllectionRef.doc(currentUser.uid).set({
+                            imageUrl: downloadURL,
+                            imageName: image.name
+                        }, { merge: true }).then(() => {
+                            toast.success("image uploaded succesfully !", {
+                                position: toast.POSITION.TOP_LEFT
+                            })
+                            fileRef.current.value = "";
+                        })
+                    }
+                });
+            }
+        )
+    }
+
+
+    const delteImageHandler = (e) => {
+        e.preventDefault()
+        const imageRef = storage.ref(`/users/${currentUser?.uid}`).child(userDetails.imageName)
+        const colllectionRef = db.collection("users")
+        imageRef.delete().then(() => {
+            console.log("gile delet");
+            colllectionRef.doc(currentUser.uid).set({
+                imageName: "",
+                imageUrl: ""
+            }, { merge: true }).then(() => {
+                toast.success("image deleted succesfully !", {
+                    position: toast.POSITION.TOP_LEFT
+                })
+                fileRef.current.value = "";
+            })
+        }).catch((error) => {
+            console.log(error);
+
+        });
+    }
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -231,6 +300,7 @@ export default function GeneralInfo() {
             db.collection("users").doc(userId)
                 .set(userDetails).then(() => {
                     console.log(userDetails);
+
                 }).then(() => {
                     toast.success("general info updated succesfully !", {
                         position: toast.POSITION.TOP_LEFT
@@ -247,8 +317,26 @@ export default function GeneralInfo() {
             <div className="row">
                 <div className="col-md-12">
                     <div className="midsection mb-4">
-                        <h5>Your Personal Info</h5>
+
                         <form className="row">
+                            <div className="col-12 py-3">
+                                <section className="profile_image_box row px-3 py-2 w-100">
+                                    <div className="col-3 w-10">
+                                        <img src={userDetails.imageUrl ? userDetails.imageUrl : "/default.png"} className="profile-img rounded-circle w-100" alt="profile-img" />
+                                    </div>
+                                    <div className="col-9 mt-2">
+                                        <h4>Profile Photo</h4>
+                                        <p>You can upload a .jpg, .png, or .gif photo</p>
+                                        <input ref={fileRef} type="file" onChange={imageChangeHandler} />
+                                        <button onClick={uploadImage} className="btn btn-primary">Change Photo</button>
+                                        {
+                                            userDetails.imageUrl &&
+                                            <button onClick={delteImageHandler} className="btn btn-danger bt-sm ms-1 cursor-pointer">delete</button>
+                                        }
+                                    </div>
+                                </section>
+                                <h5>Your Personal Info</h5>
+                            </div>
                             <div className="col-md-6 ">
                                 <div className="midsection__form">
                                     <label htmlFor="FirstName" className="form-label labelFont">First Name</label>

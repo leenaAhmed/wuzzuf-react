@@ -6,6 +6,7 @@ import Sidebar from './sidebar';
 import LearningInterests from "./learningInterests";
 import OnlinePresence from './onlinePresence';
 import AdditionalInfo from './additionalInfo';
+import UploadCV from './uploadCV';
 
 export default function EditProfile() {
     return (
@@ -19,6 +20,7 @@ export default function EditProfile() {
                     <Route path="/profile/learning-interests" component={LearningInterests} />
                     <Route path="/profile/online-presence" component={OnlinePresence} />
                     <Route path="/profile/additional-info" component={AdditionalInfo} />
+                    <Route path="/profile/cv" component={UploadCV} />
                 </div>
             </section>
         </>

@@ -181,7 +181,7 @@ export default function OnlinePresence() {
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Facebook" placeholder="facebook.com/username"
                                         onChange={facebookChangeHandler}
-                                        value={userDetails?.onlinePresence?.facebook ? userDetails.onlinePresence.facebook : ""} />
+                                        value={userDetails.onlinePresence?.facebook ? userDetails.onlinePresence.facebook : ""} />
                                 </div>
                             </div>
                             <div className="mb-4 row">
@@ -189,7 +189,7 @@ export default function OnlinePresence() {
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Twitter" placeholder="twitter.com/username"
                                         onChange={twitterChangeHandler}
-                                        value={userDetails?.onlinePresence?.twitter ? userDetails.onlinePresence.twitter : ""} />
+                                        value={userDetails.onlinePresence?.twitter ? userDetails.onlinePresence.twitter : ""} />
                                 </div>
                             </div>
                             <div className="mb-4 row">
@@ -197,7 +197,7 @@ export default function OnlinePresence() {
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Behance" placeholder="behance.net.com/username"
                                         onChange={behanceChangeHandler}
-                                        value={userDetails?.onlinePresence?.behance ? userDetails.onlinePresence.behance : ""} />
+                                        value={userDetails.onlinePresence?.behance ? userDetails.onlinePresence.behance : ""} />
                                 </div>
                             </div>
                             <div className="mb-4 row">
@@ -205,14 +205,14 @@ export default function OnlinePresence() {
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Instagram" placeholder="instgram.com/username"
                                         onChange={instagramChangeHandler}
-                                        value={userDetails?.onlinePresence?.instagram ? userDetails.onlinePresence.instgram : ""} />
+                                        value={userDetails.onlinePresence?.instagram ? userDetails.onlinePresence.instgram : ""} />
                                 </div>
                             </div>
                             <div className="mb-4 row">
                                 <label htmlFor="GitHub" className="col-sm-2 form-label text-dark">GitHub</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="GitHub" placeholder="github.com/username"
-                                        value={userDetails?.onlinePresence?.gitHub ? userDetails.onlinePresence.github : ""}
+                                        value={userDetails.onlinePresence?.gitHub ? userDetails.onlinePresence.gitHub : ""}
                                         onChange={gitHubChangeHandler} />
 
                                 </div>
@@ -223,7 +223,7 @@ export default function OnlinePresence() {
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="YouTube" placeholder="youtube.com/username"
                                         onChange={youTubeChangeHandler}
-                                        value={userDetails?.onlinePresence?.youTube ? userDetails.onlinePresence.youTube : ""}
+                                        value={userDetails.onlinePresence?.youTube ? userDetails.onlinePresence.youTube : ""}
                                     />
                                 </div>
                             </div>
@@ -231,7 +231,7 @@ export default function OnlinePresence() {
                                 <label htmlFor="Blog" className="col-sm-2 form-label text-dark">Blog</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Blog" placeholder="your blog" onChange={blogChangeHandler}
-                                        value={userDetails?.onlinePresence?.blog ? userDetails.onlinePresence.blog : ""} />
+                                        value={userDetails.onlinePresence?.blog ? userDetails.onlinePresence.blog : ""} />
                                 </div>
                             </div>
                             <div className="mb-4 row">

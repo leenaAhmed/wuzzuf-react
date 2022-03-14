@@ -15,7 +15,8 @@ import {
   faCog,
   faBars,
   faThin,
-  faGlobe
+  faGlobe,
+  faSearch
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -41,14 +42,11 @@ export default function Navbar() {
     if (currentUser) {
       const userId = currentUser.uid;
       console.log(userId);
-      db.collection("users")
-        .doc(userId)
-        .get()
-        .then((snapshot) => {
-          if (snapshot.exists) {
-            setUserDetails(snapshot.data());
-          }
-        });
+      db.collection("users").doc(userId).onSnapshot((doc) => {
+        if (doc.exists) {
+          setUserDetails(doc.data())
+        }
+      })
     }
   }, [currentUser]);
 
@@ -56,6 +54,7 @@ export default function Navbar() {
   async function handleLogOut() {
     try {
       await logout().then(() => {
+        localStorage.removeItem("uid")
         history.push("/login");
       });
     } catch {
@@ -121,7 +120,7 @@ export default function Navbar() {
                           aria-describedby="basic-addon2"
                         />
                         <span className="input-group-text" id="basic-addon2">
-                          <i className="fas fa-search"></i>
+                          <FontAwesomeIcon icon={faSearch} />
                         </span>
                       </div>
                     </form>
@@ -134,8 +133,8 @@ export default function Navbar() {
                     onClick={() => toggleShownClass()}
                   >
                     <img
-                      className="img-fluid img-thumbnail rounded-circle"
-                      src="images/avatar/member-2.png"
+                      className="img-fluid nav-profile-img img-thumbnail rounded-circle"
+                      src={userDetails.imageUrl ? userDetails.imageUrl : "/default.png"}
                       alt=""
                     />
                     <FontAwesomeIcon className="menue-btn" icon={faBars} />
@@ -154,22 +153,17 @@ export default function Navbar() {
           <div className="row profile-info setting-option">
             <a className="col-3 img-container">
               <img
-                className="img-fluid rounded-circle"
-                src="src/member-2.png"
+                className="img-fluid rounded-circle dropdown-img"
+                src={userDetails.imageUrl ? userDetails.imageUrl : "/default.png"}
                 alt="avatar"
               />
             </a>
             <div className="col-9">
-              <a
-                className="view-profile d-flex flex-column"
-                href="general-info.html"
-              >
-                <span className="h5 user-name">
-                  {userDetails.firstName + " " + userDetails.lastName}
-                </span>
+              <NavLink to="/profile/general-info/" className="view-profile d-flex flex-column">
+                <span className="h5 user-name">{userDetails.firstName + " " + userDetails.lastName}</span>
                 <span className="email">{userDetails.email}</span>
                 <span className="view-profile-link">View profile</span>
-              </a>
+              </NavLink>
             </div>
           </div>
           <hr />
