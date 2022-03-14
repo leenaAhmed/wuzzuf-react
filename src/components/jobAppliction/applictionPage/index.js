@@ -21,8 +21,8 @@ const PageAppliction = () => {
   const [noApplicationMessage ,setnoApplicationMessage]  = useState(json[0].noApplicationMess) ;
   useEffect(()=>
   {
-    if(lang=="English") {Setjson(enLang)}
-    if(lang=='العربية'){Setjson(arLang)}
+    if(lang=="English") {Setjson(enLang) ; setnoApplicationMessage(enLang[0].noApplicationMess)}
+    if(lang=='العربية'){Setjson(arLang); setnoApplicationMessage(arLang[0].noApplicationMess)}
   },[lang])
  
   async function loadApplication() {
@@ -32,6 +32,10 @@ const PageAppliction = () => {
     if(querySnapshot.docs.length>0)
     {
       setnoApplicationMessage('');
+      setIsLoading(false);
+    }
+    else if(querySnapshot.docs.length==0)
+    {
       setIsLoading(false);
     }
     setappliction(
