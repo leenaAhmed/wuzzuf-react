@@ -25,12 +25,15 @@ function App() {
       <Router>
         <AuthProvider>
           <LanguageProvider value={{ lang, setLang }}>
-            
             {/* <ProtectedRoute path="/" exact component={MainLayout} /> */}
-         
+
             <Navbar />
             <Switch>
-            <LoginProtectedRoute path="/registration" exact component={Registration} />
+              <LoginProtectedRoute
+                path="/registration"
+                exact
+                component={Registration}
+              />
               <ProtectedRoute path="/" exact component={ExplorPage} />
               <Route
                 path="/jopdetails/:companyId/:jobId"
@@ -42,14 +45,20 @@ function App() {
                 exact
                 component={ApplyToJob}
               />
-              <Route path="/search" exact component={SearchPage} />
-              <Route path="/profile/general-info" exact component={EditProfile} />
+              <Route path="/search/:searchTerm" exact component={SearchPage} />
+              <Route
+                path="/profile/general-info"
+                exact
+                component={EditProfile}
+              />
               <Route path="/about-us" exact component={AboutUs} />
               <Route path="/contact-us" exact component={ContactUs} />
-              <Route path="/applications-page" exact component={PageAppliction} />
+              <Route
+                path="/applications-page"
+                exact
+                component={PageAppliction}
+              />
             </Switch>
-        
-    
           </LanguageProvider>
         </AuthProvider>
       </Router>
