@@ -19,22 +19,22 @@ function MainLayout() {
       <Router>
             <Navbar />
             <Switch>
-              <Route path="/" exact component={ExplorPage} />
+              <Route path="/main" exact component={ExplorPage} />
               <Route
-                path="/jopdetails/:companyId/:jobId"
+                path="/main/jopdetails/:companyId/:jobId"
                 component={JobDetailsPage}
               />
-              <Route path="/saved" exact component={SavedPage} />
+              <Route path="/main/saved" exact component={SavedPage} />
               <Route
-                path="/applytojob/:companyId/:jobId"
+                path="/main/applytojob/:companyId/:jobId"
                 exact
                 component={ApplyToJob}
               />
-              <Route path="/search" exact component={SearchPage} />
-              <Route path="/profile" component={EditProfile} />
-              <Route path="/about-us" component={AboutUs} />
-              <Route path="/contact-us" component={ContactUs} />
-              <Route path="/applications-page" component={PageAppliction} />
+              <Route path="/main/search" exact component={SearchPage} />
+              <Route path="/main/profile" exact component={EditProfile} />
+              <Route path="/main/about-us" exact component={AboutUs} />
+              <Route path="/main/contact-us" exact component={ContactUs} />
+              <Route path="/main/applications-page" exact component={PageAppliction} />
             </Switch>
         
       </Router>

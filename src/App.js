@@ -16,7 +16,7 @@ function App() {
         <AuthProvider>
           <LanguageProvider value={{ lang, setLang }}>
             <LoginProtectedRoute path="/registration" exact component={Registration} />
-            <ProtectedRoute path="/" exact component={MainLayout} />
+            <ProtectedRoute path="/main"  component={MainLayout} />
           </LanguageProvider>
         </AuthProvider>
       </Router>
