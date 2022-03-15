@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { useHistory } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-
+import arLang from '../../language/auth/العربية.json'
+import enLang from '../../language/auth/English.json'
 import { useAuth } from "../../contexts/authContext";
 import { languageContext } from "../../contexts/languageContext";
 import "./login.scss"
@@ -14,18 +14,22 @@ function ForgetPassword() {
     const passwordRef = useRef()
     const { resetPassword } = useAuth()
     const { lang, setLang } = useContext(languageContext)
-
     const [formError, setFormError] = useState("")
     const [error, setError] = useState("")
     const [email, setEmail] = useState("")
     const history = useHistory()
-
+    const[json,Setjson] = useState(enLang);
+    useEffect(()=>
+    {
+      if(lang=="English") {Setjson(enLang)}
+      if(lang=='العربية'){Setjson(arLang)}
+    },[lang])
     const handleError = (e) => {
 
         if (e.target.name == "email") {
             setEmail(e.target.value)
             if (emailRef.current.value == "") {
-                 setFormError("Email is Required") 
+                 setFormError(`${json[0].forgetPassword[0].emailError}`)          
                     
             } else {
                 setFormError("")
@@ -36,7 +40,7 @@ function ForgetPassword() {
         e.preventDefault()
         try {
             await resetPassword(emailRef.current.value)
-            toast.success(` Check Your Mail `, {
+            toast.success(` ${json[0].forgetPassword[0].checkEmail} `, {
                 position: "top-center",
                 hideProgressBar: true,
                 autoClose: 2000,
@@ -47,7 +51,7 @@ function ForgetPassword() {
             }, 1500)
 
         } catch (error) {
-             setError("Email is Not Exist") 
+             setError(`${json[0].forgetPassword[0].error}`) 
                 
 
         }
@@ -55,15 +59,15 @@ function ForgetPassword() {
     }
     return (
         <>
-            {lang == "English" ?
-                <div className="layout">
+          
+                <div className="layout" dir={lang === "English" ? "ltr" : "rtl"}>
                     <div className="container-fluid">
                         <div className=" d-flex align-content-center justify-content-center flex-column">
                             <section className="m-auto">
                                 <h1 className="text-light text-center mb-4 fw-bolder">WUZZUF</h1>
                                 <div className="card" style={{ "width": "25rem" }} >
                                     <div className="card-body">
-                                        <h3 className="card-title text-center">Reset Password</h3>
+                                        <h3 className="card-title text-center">{json[0].forgetPassword[0].resetPassword}</h3>
                                         <hr />
                                         <div className="row">
                                             <div className="col-12">
@@ -72,7 +76,7 @@ function ForgetPassword() {
                                                     <span className="text-danger">{error}</span>
 
                                                     <div className="mt-2">
-                                                        <label htmlFor="exampleInputEmail1" className=" form-label">Enter Your Email</label>
+                                                        <label htmlFor="exampleInputEmail1" className=" form-label">{json[0].forgetPassword[0].email}</label>
                                                         <input type="text" name="email" onBlur={handleError} onChange={handleError}
                                                      
                                                         ref={emailRef} className="form-control" id="exampleInputEmail1"
@@ -80,7 +84,7 @@ function ForgetPassword() {
                                                         <span className="text-danger mt-2">{formError}</span>
                                                     </div>
 
-                                                    <button type="submit" disabled={formError != ""|| email==""} className="btn btn-primary mt-2 w-100">Reset</button>
+                                                    <button type="submit" disabled={formError != ""|| email==""} className="btn btn-primary mt-2 w-100">{json[0].forgetPassword[0].reset}</button>
                                                 </form>
 
                                                 <hr />
@@ -95,49 +99,8 @@ function ForgetPassword() {
                             </section>
                         </div>
                     </div>
-                </div> :
-                //arabic Format
-                <div className="layout" dir="rtl">
-                    <div className="container-fluid">
-                        <div className=" d-flex align-content-center justify-content-center flex-column">
-                            <section className="m-auto">
-                                <h1 className="text-light text-center mb-4 fw-bolder">WUZZUF</h1>
-                                <div className="card" style={{ "width": "25rem" }} >
-                                    <div className="card-body">
-                                        <h3 className="card-title text-center"> اعادة تعيين كلمةالمرور</h3>
-                                        <hr />
-                                        <div className="row">
-                                            <div className="col-12">
-
-                                                <form className="mb-2" onSubmit={resetPass}>
-                                                    <span className="text-danger">{error}</span>
-
-                                                    <div className="mt-2">
-                                                        <label htmlFor="exampleInputEmail1" className=" form-label">ادخل ايميل المستخدم</label>
-                                                        <input type="text" name="email" onChange={handleError} ref={emailRef} className="form-control" id="exampleInputEmail1"
-                                                        />
-                                                        <span className="text-danger mt-2">{formError}</span>
-                                                    </div>
-
-                                                    <button type="submit" disabled={formError != ""} className="btn btn-primary mt-2 w-100"> ارسال </button>
-                                                </form>
-
-                                                <hr />
-
-                                                <span className="fw-bold" onClick={() => {
-                                                    setLang(lang == "English" ? "العربية" : "English")
-                                                }} style={{ "cursor": "pointer" }}>{lang}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-
-
-            }</>
+                </div> 
+           </>
     )
 }
 

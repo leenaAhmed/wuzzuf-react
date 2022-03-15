@@ -1,15 +1,13 @@
 import app from "../firebase";
 import auth from "../firebase";
 
-
 const db = app.firestore();
 const user = auth.auth().currentUser;
 let userId;
 if (!user) {
-  userId = "";
-  userId = user.uid;
+  userId = localStorage.getItem("uid");
 } else {
-  userId = user.uid;
+  // userId = user.uid;
 }
 
 function addJobtoSavedPage(

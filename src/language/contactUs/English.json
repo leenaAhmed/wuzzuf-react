@@ -1,0 +1,19 @@
+[{
+    "title": "Contact us",
+    "firstQuestion": "What is your question about?",
+    "secoundQuestion": "Subject",
+    "thirdQuestion": "Message",
+    "categoriesArray": [{
+        "Option0": "Select...",
+        "Option1": "Technical Issue / Error with the Site",
+        "Option2": "Sales Inquiry / Request",
+        "Option3": "Partnerships / Sponsorships",
+        "Option4": "Marketing",
+        "Option5": "Product / Service Idea",
+        "Option6": "General Inquiry / Complaint",
+        "Option7": "Thanks / Praise",
+        "Option8": "Others"
+    }],
+    "sendButton":"Send",
+    "messageLabel":"Leave a comment here"
+}]

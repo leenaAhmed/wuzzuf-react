@@ -13,12 +13,12 @@ export default function Sidebar() {
                                 <NavLink to="/profile/general-info" activeClassName="sidebar__actived">
                                     <li className="list-group-item">General Info</li>
                                 </NavLink>
-                                <NavLink
+                                {/* <NavLink
                                     to="/profile/career-interests"
                                     activeClassName="sidebar__actived"
                                 >
                                     <li className="list-group-item">Career Interests</li>
-                                </NavLink>
+                                </NavLink> */}
                                 <NavLink
                                     to="/profile/learning-interests"
                                     activeClassName="sidebar__actived"
@@ -28,19 +28,19 @@ export default function Sidebar() {
                                 <NavLink to="/profile/experience" activeClassName="sidebar__actived">
                                     <li className="list-group-item ">Experiance</li>
                                 </NavLink>
-                                <NavLink to="#">
+                                {/* <NavLink to="#">
                                     <li className="list-group-item">Education</li>
-                                </NavLink>
-                                <NavLink to="#">
+                                </NavLink> */}
+                                {/* <NavLink to="#">
                                     <li className="list-group-item">Skills</li>
-                                </NavLink>
+                                </NavLink> */}
                                 <NavLink
                                     to="/profile/online-presence"
                                     activeClassName="sidebar__actived"
                                 >
                                     <li className="list-group-item ">Online Presence</li>
                                 </NavLink>
-                                <NavLink to="#">
+                                <NavLink to="/profile/cv">
                                     <li className="list-group-item">Upload CV</li>
                                 </NavLink>
                                 <NavLink

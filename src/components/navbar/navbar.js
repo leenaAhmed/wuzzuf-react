@@ -14,8 +14,8 @@ import {
   faEnvelope,
   faCog,
   faBars,
-  faThin,
-  faGlobe
+  faGlobe,
+  faSearch
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -26,6 +26,7 @@ export default function Navbar() {
   const [menueShowen, setmenueShowen] = useState(" ");
   const { currentUser, logout } = useAuth();
   const [userDetails, setUserDetails] = useState({});
+  const [SearchTerm, SetSearchTerm] = useState("");
   const history = useHistory();
 
   //toggle class showen function in drop down menue in nav
@@ -43,10 +44,9 @@ export default function Navbar() {
       console.log(userId);
       db.collection("users")
         .doc(userId)
-        .get()
-        .then((snapshot) => {
-          if (snapshot.exists) {
-            setUserDetails(snapshot.data());
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            setUserDetails(doc.data());
           }
         });
     }
@@ -56,8 +56,8 @@ export default function Navbar() {
   async function handleLogOut() {
     try {
       await logout().then(() => {
-        localStorage.removeItem("uid")
-        history.push("/login");
+        localStorage.removeItem("uid");
+        history.push("/registration");
       });
     } catch {
       console.log("faile to logout");
@@ -95,12 +95,12 @@ export default function Navbar() {
                     <li className="d-inline-flex">
                       <NavLink to="/applications-page">applications</NavLink>
                     </li>
-                    <li className="d-inline-flex">
+                    <li className="d-inline-flex mt-2">
                       <FontAwesomeIcon
                         icon={faGlobe}
                         className="text-dark"
                         onClick={() => {
-                          setLang(lang == "English" ? "العربية" : "English");
+                          setLang(lang === "English" ? "العربية" : "English");
                         }}
                       />
                     </li>
@@ -120,10 +120,16 @@ export default function Navbar() {
                           placeholder="Search jobs, companies.."
                           aria-label="Recipient's username"
                           aria-describedby="basic-addon2"
+                          onChange={(event) => {
+                            SetSearchTerm(event.target.value);
+                            console.log(event.target.value);
+                          }}
                         />
-                        <span className="input-group-text" id="basic-addon2">
-                          <i className="fas fa-search"></i>
-                        </span>
+                        <Link to="/search">
+                          <span className="input-group-text" id="basic-addon2">
+                            <FontAwesomeIcon icon={faSearch} />
+                          </span>
+                        </Link>
                       </div>
                     </form>
                   </div>
@@ -135,8 +141,12 @@ export default function Navbar() {
                     onClick={() => toggleShownClass()}
                   >
                     <img
-                      className="img-fluid img-thumbnail rounded-circle"
-                      src="images/avatar/member-2.png"
+                      className="img-fluid nav-profile-img img-thumbnail rounded-circle"
+                      src={
+                        userDetails.imageUrl
+                          ? userDetails.imageUrl
+                          : "/default.png"
+                      }
                       alt=""
                     />
                     <FontAwesomeIcon className="menue-btn" icon={faBars} />
@@ -153,24 +163,26 @@ export default function Navbar() {
           id="setting_menue"
         >
           <div className="row profile-info setting-option">
-            <a className="col-3 img-container">
+            <a href className="col-3 img-container">
               <img
-                className="img-fluid rounded-circle"
-                src="src/member-2.png"
+                className="img-fluid rounded-circle dropdown-img"
+                src={
+                  userDetails.imageUrl ? userDetails.imageUrl : "/default.png"
+                }
                 alt="avatar"
               />
             </a>
             <div className="col-9">
-              <a
+              <NavLink
+                to="/profile/general-info/"
                 className="view-profile d-flex flex-column"
-                href="general-info.html"
               >
                 <span className="h5 user-name">
                   {userDetails.firstName + " " + userDetails.lastName}
                 </span>
                 <span className="email">{userDetails.email}</span>
                 <span className="view-profile-link">View profile</span>
-              </a>
+              </NavLink>
             </div>
           </div>
           <hr />
