@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import './editProfile.scss'
 import { useAuth } from "../../contexts/authContext"
 import { db, storage } from "../../firebase";
 import Select from 'react-select';
 import { toast } from 'react-toastify';
+import { languageContext } from '../../contexts/languageContext';
 
+import ar from "../../language/editProfile/general-info/ar.json"
+import en from "../../language/editProfile/general-info/en.json"
 
 export default function GeneralInfo() {
     const { currentUser } = useAuth()
@@ -12,6 +15,13 @@ export default function GeneralInfo() {
     const dayOptions = displayDaysInSelect()
     const monthOptions = displayMonthInSelect()
     const yearOptions = displayYearInSelect()
+    const { lang, setLang } = useContext(languageContext);
+    const [json, setJson] = useState(en);
+    const [progress, setProgress] = useState(0)
+    const [image, setImage] = useState("")
+    const fileRef = useRef(null);
+    const [visible, setVisible] = useState(false);
+
     const militaryStatus = [
         { value: 'not applicable', label: 'Not Applicable' },
         { value: 'exempted', label: 'Exempted' },
@@ -19,11 +29,21 @@ export default function GeneralInfo() {
         { value: 'postponed', label: 'Postponed' },
     ]
 
-    const [progress, setProgress] = useState(0)
-    const [image, setImage] = useState("")
-    const fileRef = useRef(null);
-    const [visible, setVisible] = useState(false);
+
+    const militaryStatusAr = [
+        { value: 'not applicable', label: json.notApplicable },
+        { value: 'exempted', label: json.extepmted },
+        { value: 'completed', label: json.completed },
+        { value: 'postponed', label: json.posponded },
+    ]
+
+
+
     console.log(currentUser);
+    useEffect(() => {
+        if (lang == "English") { setJson(en) }
+        if (lang == 'العربية') { setJson(ar) }
+    }, [lang])
 
     //get user details according to auth
     useEffect(() => {
@@ -322,7 +342,7 @@ export default function GeneralInfo() {
         <article className="col-lg-8 col-md-12">
             <div className="row">
                 <div className="col-md-12">
-                    <div className="midsection mb-4">
+                    <div className="midsection mb-4" style={lang=="English" ?{paddingLeft : "5px"} : {paddingRight : "20px"}}>
 
                         <form className="row">
                             <div className="col-12 py-3">
@@ -331,25 +351,25 @@ export default function GeneralInfo() {
                                         <img src={userDetails.imageUrl ? userDetails.imageUrl : "/default.png"} className="profile-img rounded-circle w-100" alt="profile-img" />
                                     </div>
                                     <div className="col-9 mt-2">
-                                        <h4>Profile Photo</h4>
-                                        <p>You can upload a .jpg, .png, or .gif photo</p>
+                                        <h4>{json.profilePhoto}</h4>
+                                        <p>{json.imgTypeMsg}</p>
                                         <input ref={fileRef} type="file" onChange={imageChangeHandler} />
 
-                                        <button onClick={uploadImage} className="btn btn-primary">Change Photo</button>
+                                        <button onClick={uploadImage} className="btn btn-primary">{json.changePhoto}</button>
                                         {
                                             userDetails.imageUrl &&
-                                            <button onClick={delteImageHandler} className="btn btn-danger bt-sm ms-1 cursor-pointer">delete</button>
+                                            <button onClick={delteImageHandler} className="btn btn-danger bt-sm ms-1 cursor-pointer">{json.delete}</button>
                                         }
                                         {
                                             visible && <p className="midsection__form__pa mt-2">Uploaded {progress} %</p>
                                         }
                                     </div>
                                 </section>
-                                <h5>Your Personal Info</h5>
+                                <h5>{json.presonalInfo}</h5>
                             </div>
                             <div className="col-md-6 ">
                                 <div className="midsection__form">
-                                    <label htmlFor="FirstName" className="form-label labelFont">First Name</label>
+                                    <label htmlFor="FirstName" className="form-label labelFont">{json.firstName}</label>
                                     <span className="text-danger">*</span>
                                     <input type="text"
                                         className="form-control"
@@ -362,7 +382,7 @@ export default function GeneralInfo() {
 
                             <div className="col-md-6">
                                 <div className="midsection__form">
-                                    <label htmlFor="MiddleName" className="form-label">Middle Name</label>
+                                    <label htmlFor="MiddleName" className="form-label">{json.middleName}</label>
                                     <input type="text"
                                         className="form-control"
                                         id="MiddleName"
@@ -374,7 +394,7 @@ export default function GeneralInfo() {
 
                             <div className="col-md-6 ">
                                 <div className="midsection__form">
-                                    <label htmlFor="LastName" className="form-label labelFont">Last Name</label>
+                                    <label htmlFor="LastName" className="form-label labelFont">{json.lastName}</label>
                                     <span className="text-danger">*</span>
                                     <input
                                         type="text"
@@ -387,7 +407,7 @@ export default function GeneralInfo() {
 
                             <div className="col-md-7 ">
                                 <div className="midsection__form">
-                                    <label className="col-form-label form-label">Birthday</label>
+                                    <label className="col-form-label form-label">{json.birthDay}</label>
                                     <span className="text-danger">*</span>
                                     <div className="row">
                                         <div className="col-md-4">
@@ -420,17 +440,17 @@ export default function GeneralInfo() {
 
                             <div className="col-md-12 ">
                                 <div className="midsection__form">
-                                    <label className="col-form-label form-label">Gender</label>
+                                    <label className="col-form-label form-label">{json.gender}</label>
                                     <div className="form-check">
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="Gender" id="Male"
                                                 value="male" checked={userDetails.gender === "male"} onChange={genderChangeHandler} />
-                                            Male
+                                            {json.male}
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="Gender" id="Female"
                                                 value="female" checked={userDetails.gender === "female"} onChange={genderChangeHandler} />
-                                            Female
+                                            {json.female}
                                         </label>
                                     </div>
                                 </div>
@@ -438,9 +458,9 @@ export default function GeneralInfo() {
 
                             <div className="col-md-7 ">
                                 <div className="midsection__form">
-                                    <label className="col-form-label form-label">Military Status</label>
+                                    <label className="col-form-label form-label">{json.militraySatus}</label>
                                     <Select className='w-100'
-                                        options={militaryStatus}
+                                        options={lang == "English" ? militaryStatus  : militaryStatusAr}
                                         placeholder={userDetails.militarySatus}
                                         onChange={militaryChangeHandler}
                                     />
@@ -449,26 +469,26 @@ export default function GeneralInfo() {
 
                             <div className="col-md-12 ">
                                 <div className="midsection__form">
-                                    <label className="col-form-label form-label">Marital Status</label>
+                                    <label className="col-form-label form-label">{json.maritalStatus}</label>
                                     <div className="form-check" onChange={maritalStatusChangeHandler}>
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="MaritalStatus"
                                                 id="unspecified" value="unspecified"
                                                 checked={userDetails.maritalStatus === "unspecified"}
                                             />
-                                            Unspecified
+                                            {json.unspecified}
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="MaritalStatus"
                                                 id="single" value="single"
                                                 checked={userDetails.maritalStatus === "single"} />
-                                            Single
+                                            {json.single}
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="MaritalStatus"
                                                 id="married" value="married"
                                                 checked={userDetails.maritalStatus === "married"} />
-                                            Married
+                                            {json.married}
                                         </label>
                                     </div>
                                 </div>
@@ -476,17 +496,17 @@ export default function GeneralInfo() {
 
                             <div className="col-md-6 ">
                                 <div className="midsection__form">
-                                    <label className="col-form-label form-label">Do you have a driving license?</label>
+                                    <label className="col-form-label form-label">{json.license}</label>
                                     <div className="form-check" onChange={drivingLicenseChangeHandler}>
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="license" id="Yes"
                                                 value="yes" checked={userDetails.drivingLicense === "yes"} />
-                                            Yes
+                                            {json.yes}
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="license" id="No"
                                                 value="no" checked={userDetails.drivingLicense === "no"} />
-                                            No
+                                            {json.no}
                                         </label>
                                     </div>
                                 </div>
@@ -494,19 +514,19 @@ export default function GeneralInfo() {
 
                             <div className="col-md-4 ">
                                 <div className="midsection__form">
-                                    <label className="col-form-label form-label">Do you have a car?</label>
+                                    <label className="col-form-label form-label">{json.car}</label>
                                     <div className="form-check">
                                         <label className="form-check-label" >
                                             <input type="radio" className="form-check-input" name="Car" id="Yes"
                                                 value="yes"
                                                 checked={userDetails.carOwn === "yes"} onChange={carOwnChangeHandler} />
-                                            Yes
+                                            {json.yes}
                                         </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                         <label className="form-check-label">
                                             <input type="radio" className="form-check-input" name="Car" id="No"
                                                 value="no" onChange={carOwnChangeHandler}
                                                 checked={userDetails.carOwn === "no"} />
-                                            No
+                                            {json.no}
                                         </label>
                                     </div>
                                 </div>
@@ -514,7 +534,7 @@ export default function GeneralInfo() {
 
                             <div className="col-md-9 ">
                                 <div className="midsection__form">
-                                    <label htmlFor="TagLine" className="form-label labelFont">Tag Line</label>
+                                    <label htmlFor="TagLine" className="form-label labelFont">{json.tagLine}</label>
                                     <input type="text" className="form-control" id="TagLine"
                                         onChange={tagLineChangeHandler}
                                         value={userDetails.title ? userDetails.title : ""}
@@ -524,13 +544,13 @@ export default function GeneralInfo() {
                         </form>
                     </div>
                     <div className="col-md-12 mb-4 ">
-                        <div className="midsection">
-                            <h5>Your Location</h5>
+                        <div className="midsection"  style={lang=="English" ?{paddingLeft : "5px"} : {paddingRight : "20px"}}>
+                            <h5>{json.location}</h5>
                             <form className="row">
                                 <div className="col-md-7">
                                     <div className="midsection__form">
-                                        <label className="col-form-label form-label">Country <span
-                                            className="text-danger">*</span></label>
+                                        {/* <label className="col-form-label form-label">Country <span
+                                            className="text-danger">*</span></label> */}
                                         {/* <select className="form-select mb-2" id="Country"
                                             aria-label="Disabled select example">
                                             <option disabled selected>Select..</option>
@@ -551,7 +571,7 @@ export default function GeneralInfo() {
 
                                 <div className="col-md-7 ">
                                     <div className="midsection__form">
-                                        <label htmlFor="postalCode" className="form-label labelFont">Postal Code</label>
+                                        <label htmlFor="postalCode" className="form-label labelFont">{json.postalCode}</label>
                                         <input type="text" className="form-control" id="postalCode"
                                             onChange={postalCodeChangeHandler}
                                             value={userDetails.postalCode ? userDetails.postalCode : ""}
@@ -561,18 +581,17 @@ export default function GeneralInfo() {
 
                                 <div className="col-md-12 ">
                                     <div className="midsection__form">
-                                        <label className="col-form-label form-label">Would you be willing to relocate to
-                                            another city or country if you find the right opportunity?</label>
+                                        <label className="col-form-label form-label">{json.relocate}</label>
                                         <div className="form-check">
                                             <label className="form-check-label">
                                                 <input type="radio" className="form-check-input" name="opportunity"
                                                     id="Yes" value="yes" checked={userDetails.relocation === "yes"} onChange={relocationChangeHandler} />
-                                                Yes
+                                                {json.yes}
                                             </label> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                                             <label className="form-check-label">
                                                 <input type="radio" checked={userDetails.relocation === "no"} onChange={relocationChangeHandler} className="form-check-input" name="opportunity"
                                                     id="No" value="no" />
-                                                No
+                                                {json.no}
                                             </label>
                                         </div>
                                     </div>
@@ -583,12 +602,12 @@ export default function GeneralInfo() {
 
 
                     <div className="col-md-12 mb-4 ">
-                        <div className="midsection">
-                            <h5>Your Contact Info</h5>
+                        <div className="midsection"  style={lang=="English" ?{paddingLeft : "5px"} : {paddingRight : "20px"}}>
+                            <h5>{json.contactInfo}</h5>
                             <div className="row">
                                 <div className="col-md-6 me-5">
                                     <div className="midsection__form">
-                                        <label htmlFor="TagLine" className="form-label labelFont">Mobile Number</label>
+                                        <label htmlFor="TagLine" className="form-label labelFont">{json.mobileNumber}</label>
                                         <span className="text-danger">*</span>
                                         <input type="text" onChange={mobileNoChangeHandler}
                                             value={userDetails.mobile ? userDetails.mobile : ""}
@@ -597,7 +616,7 @@ export default function GeneralInfo() {
                                 </div>
                                 <div className="col-md-6 mb-4">
                                     <div className="midsection__form">
-                                        <label htmlFor="TagLine" className="form-label labelFont">Alternative Number</label>
+                                        <label htmlFor="TagLine" className="form-label labelFont">{json.altMobileNumber}</label>
                                         <input type="text" onChange={altMobileNoChangeHandler}
                                             value={userDetails.altMobile ? userDetails.altMobile : ""}
                                             className="form-control" id="TagLine" />
@@ -606,7 +625,7 @@ export default function GeneralInfo() {
                             </div>
                         </div>
                     </div>
-                    <button onClick={submitHandler} type="submit" className="btn btn-primary mb-2">Save Changes</button>
+                    <button onClick={submitHandler} type="submit" className="btn btn-primary mb-2">{json.save}</button>
                 </div>
             </div>
         </article>

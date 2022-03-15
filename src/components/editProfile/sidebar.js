@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useContext, useState ,useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./editProfile.scss";
+import { languageContext } from '../../contexts/languageContext';
+import ar from "../../language/editProfile/general-info/ar.json"
+import en from "../../language/editProfile/general-info/en.json"
 
 export default function Sidebar() {
+    const { lang, setLang } = useContext(languageContext);
+    const [json, setJson] = useState(en);
+
+    useEffect(() => {
+        if (lang == "English") { setJson(en) }
+        if (lang == 'العربية') { setJson(ar) }
+    }, [lang])
+
     return (
         <>
             <aside className="col-lg-4">
@@ -11,7 +22,7 @@ export default function Sidebar() {
                         <div className="sidebar">
                             <ul className="list-group">
                                 <NavLink to="/profile/general-info" activeClassName="sidebar__actived">
-                                    <li className="list-group-item">General Info</li>
+                                    <li className="list-group-item">{json.generalInfo}</li>
                                 </NavLink>
                                 {/* <NavLink
                                     to="/profile/career-interests"
@@ -38,10 +49,10 @@ export default function Sidebar() {
                                     to="/profile/online-presence"
                                     activeClassName="sidebar__actived"
                                 >
-                                    <li className="list-group-item ">Online Presence</li>
+                                    <li className="list-group-item ">{json.onlinePresence}</li>
                                 </NavLink>
                                 <NavLink to="/profile/cv">
-                                    <li className="list-group-item">Upload CV</li>
+                                    <li className="list-group-item">{json.uploadCv}</li>
                                 </NavLink>
                                 {/* <NavLink
                                     to="/profile/additional-info"

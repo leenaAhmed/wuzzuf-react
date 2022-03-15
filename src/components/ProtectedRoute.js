@@ -2,7 +2,6 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
-import auth from "../firebase";
 export default function ProtectedRoute({ component: Component, ...rest }) {
   const{currentUser}=useAuth()
   return (
@@ -15,7 +14,7 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
         ) : (
           <Redirect to={
             {
-              pathname:"/login",
+              pathname:"/registration",
               state:{
                 from:props.location
               }

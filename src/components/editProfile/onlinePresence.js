@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState ,useEffect } from "react";
 import "./editProfile.scss"
 import { useAuth } from "../../contexts/authContext"
 import { db } from "../../firebase";
 import { toast } from 'react-toastify';
-
+import { languageContext } from '../../contexts/languageContext';
+import ar from "../../language/editProfile/general-info/ar.json"
+import en from "../../language/editProfile/general-info/en.json"
 
 export default function OnlinePresence() {
+    
     const { currentUser } = useAuth()
     const [userDetails, setUserDetails] = useState({});
+    const { lang, setLang } = useContext(languageContext);
+    const [json, setJson] = useState(en);
+
+    useEffect(() => {
+        if (lang == "English") { setJson(en) }
+        if (lang == 'العربية') { setJson(ar) }
+    }, [lang])
 
     //get user details according to auth
     useEffect(() => {
@@ -164,11 +174,11 @@ export default function OnlinePresence() {
         <article className="col-lg-8 col-md-12">
             <div className="row">
                 <div className="col-md-12">
-                    <div className="midsection mb-4">
-                        <h5 className="mb-4">Your Online Presence</h5>
+                    <div className="midsection mb-4" style={lang=="English" ?{paddingLeft : "5px"} : {paddingRight : "20px"}}>
+                        <h5 className="mb-4">{json.onlinePresence}</h5>
                         <div className="midsection__form">
                             <div className="mb-4 row">
-                                <label htmlFor="LinkedIn" className="col-sm-2 form-label text-dark">LinkedIn</label>
+                                <label htmlFor="LinkedIn" className="col-sm-2 form-label text-dark">{json.linkedIn}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="LinkedIn" placeholder="linkeding.com/in/username"
                                         onChange={linkedInChangeHandler}
@@ -177,7 +187,7 @@ export default function OnlinePresence() {
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label htmlFor="Facebook" className="col-sm-2 form-label text-dark">Facebook</label>
+                                <label htmlFor="Facebook" className="col-sm-2 form-label text-dark">{json.facebook}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Facebook" placeholder="facebook.com/username"
                                         onChange={facebookChangeHandler}
@@ -185,7 +195,7 @@ export default function OnlinePresence() {
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label htmlFor="Twitter" className="col-sm-2 form-label text-dark">Twitter</label>
+                                <label htmlFor="Twitter" className="col-sm-2 form-label text-dark">{json.twitter}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Twitter" placeholder="twitter.com/username"
                                         onChange={twitterChangeHandler}
@@ -193,7 +203,7 @@ export default function OnlinePresence() {
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label htmlFor="Behance" className="col-sm-2 form-label text-dark" >Behance</label>
+                                <label htmlFor="Behance" className="col-sm-2 form-label text-dark" >{json.behance}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Behance" placeholder="behance.net.com/username"
                                         onChange={behanceChangeHandler}
@@ -201,7 +211,7 @@ export default function OnlinePresence() {
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label htmlFor="Instagram" className="col-sm-2 form-label text-dark" >Instagram</label>
+                                <label htmlFor="Instagram" className="col-sm-2 form-label text-dark" >{json.instagram}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Instagram" placeholder="instgram.com/username"
                                         onChange={instagramChangeHandler}
@@ -209,7 +219,7 @@ export default function OnlinePresence() {
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label htmlFor="GitHub" className="col-sm-2 form-label text-dark">GitHub</label>
+                                <label htmlFor="GitHub" className="col-sm-2 form-label text-dark">{json.github}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="GitHub" placeholder="github.com/username"
                                         value={userDetails.onlinePresence?.gitHub ? userDetails.onlinePresence.gitHub : ""}
@@ -219,7 +229,7 @@ export default function OnlinePresence() {
                             </div>
 
                             <div className="mb-4 row">
-                                <label htmlFor="YouTube" className="col-sm-2 form-label text-dark">YouTube</label>
+                                <label htmlFor="YouTube" className="col-sm-2 form-label text-dark">{json.youtube}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="YouTube" placeholder="youtube.com/username"
                                         onChange={youTubeChangeHandler}
@@ -228,14 +238,14 @@ export default function OnlinePresence() {
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label htmlFor="Blog" className="col-sm-2 form-label text-dark">Blog</label>
+                                <label htmlFor="Blog" className="col-sm-2 form-label text-dark">{json.blog}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Blog" placeholder="your blog" onChange={blogChangeHandler}
                                         value={userDetails.onlinePresence?.blog ? userDetails.onlinePresence.blog : ""} />
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label htmlFor="Website" className="col-sm-2 form-label text-dark">Website</label>
+                                <label htmlFor="Website" className="col-sm-2 form-label text-dark">{json.website}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Website" placeholder="your personal website"
                                         onChange={websiteChangeHandler}
@@ -243,7 +253,7 @@ export default function OnlinePresence() {
                                 </div>
                             </div>
                             <div className="mb-4 row">
-                                <label htmlFor="Other" className="col-sm-2 form-label text-dark">Other</label>
+                                <label htmlFor="Other" className="col-sm-2 form-label text-dark">{json.other}</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" id="Other" onChange={otherChangeHandler}
                                         value={userDetails?.onlinePresence?.other ? userDetails.onlinePresence.other : ""} />
@@ -253,7 +263,7 @@ export default function OnlinePresence() {
                         </div>
 
                     </div>
-                    <button type="submit" onClick={submitHandler} className="btn btn-primary mb-2">Save Changes</button>
+                    <button type="submit" onClick={submitHandler} className="btn btn-primary mb-2">{json.save}</button>
 
 
                 </div>

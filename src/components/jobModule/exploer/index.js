@@ -5,12 +5,22 @@ import {
   faEyeSlash,
   faBookmark
 } from "@fortawesome/free-solid-svg-icons";
-
+import { useState } from "react";
+import { toast } from "react-toastify";
+import ShareModel from "./../model/index";
 import download from "./../../../assets/download.png";
 import saved from "../../../services/saved";
 import "./style.scss";
 
 const ExplorCard = (props) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handelShare = (id) => {
+    setShowModal(!showModal);
+  };
+  const handleCloseModal = () => {
+    setShowModal(!showModal);
+  };
   const HandleClick = (id) => {
     saved
       .addJobtoSavedPage(
@@ -25,10 +35,15 @@ const ExplorCard = (props) => {
         props.experience
       )
       .then(() => {
-        alert("saved");
+        toast.success("saved   succesfully !", {
+          position: toast.POSITION.TOP_LEFT
+        });
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.message, {
+          position: toast.POSITION.TOP_LEFT
+        });
       });
   };
 
@@ -97,10 +112,20 @@ const ExplorCard = (props) => {
             <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
             {props.save}
           </button>
-          <button className="btn   text-secondary hovering_btn">
+          <button
+            className="btn   text-secondary hovering_btn"
+            onClick={() => handelShare(props.id)}
+          >
             <FontAwesomeIcon icon={faShare} className="me-1 ms-1" />
             {props.Share}
           </button>
+          <ShareModel
+            isOpen={showModal}
+            closeModal={handleCloseModal}
+            toggle={handelShare}
+            quote={props.title}
+            value={`${"jopdetails/" + props.companyId + "/" + props.id}`}
+          />
           <button className="btn   text-secondary hovering_btn">
             <FontAwesomeIcon icon={faEyeSlash} className="me-1 ms-1" />
             {props.Hide}

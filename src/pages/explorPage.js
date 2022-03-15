@@ -2,12 +2,15 @@ import { Link } from "react-router-dom";
 import Card from "../components/jobModule/exploer/index";
 import React, { useEffect, useState, useContext } from "react";
 import { languageContext } from "./../contexts/languageContext";
-
+import { useAuth } from "./../contexts/authContext";
+import { db } from "./../firebase";
 import explorjob from "../services/explorjob";
 function ExplorPage() {
   const [menuItems, setMenuItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { lang, setLang } = useContext(languageContext);
+  const { lang } = useContext(languageContext);
+  const [userDetails, setUserDetails] = useState({});
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     explorjob
@@ -27,6 +30,21 @@ function ExplorPage() {
         console.log("Error  " + error);
       });
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      const userId = currentUser.uid;
+      console.log(userId);
+      db.collection("users")
+        .doc(userId)
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            setUserDetails(doc.data());
+          }
+        });
+      console.log(userDetails);
+    }
+  }, [currentUser]);
 
   return (
     <>
@@ -57,7 +75,7 @@ function ExplorPage() {
           </div>
 
           <div
-            className="jobs__container col-md-5 col-lg-8 col-md-12"
+            className="jobs__container col-md-6 col-lg-8 col-md-12"
             id="listOfJobs"
           >
             {isLoading === true && (
@@ -120,25 +138,37 @@ function ExplorPage() {
                 ))}
           </div>
           {/*prograss */}
-          <div className="jobs__prograss col-md-3 col-3 ">
-            {lang == "English" ? (
+          <div className="jobs__prograss col-lg-3 col-md-12 col-12 ">
+            {lang === "English" ? (
               <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Improve Your Profile</h5>
-                  <small className="mb-2 text-muted"></small>
-                  <div className="progress">
-                    <div
-                      className="progress-bar bg-warning"
-                      role="progressbar"
-                      style={{ width: " 63%" }}
-                      aria-valuenow="63"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
+                <div className="card-body d-flex">
+                  <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <img
+                      className="img-fluid nav-profile-img img-thumbnail rounded-circle"
+                      src={
+                        userDetails.imageUrl
+                          ? userDetails.imageUrl
+                          : "/default.png"
+                      }
+                      alt={userDetails.firstName}
+                    />
                   </div>
-                  <small className="mt-3 text-muted">
-                    Your profile strength is 63%
-                  </small>
+                  <div className="col-lg col-md ms-4">
+                    <span className="user-name mt-1 text-capitalize">
+                      {userDetails.firstName + " " + userDetails.lastName}
+                    </span>
+                    <p className="text-capitalize text-muted">
+                      {userDetails.title}
+                    </p>
+                  </div>
+                </div>
+                <div className="px-3 py-2">
+                  <h5 className="fs-6"> Add Skills</h5>
+                  <p className="text-muted fs-6 fw-light">
+                    Users with 10+ related skills have more chances to get
+                    selected by employers
+                  </p>
+                  <button className="btn btn-outline-primary">Add Skill</button>
                 </div>
               </div>
             ) : (

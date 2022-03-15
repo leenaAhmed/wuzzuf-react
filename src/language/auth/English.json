@@ -1,0 +1,45 @@
+[{
+    "forgetPassword": [{
+        "resetPassword": "Reset Password",
+        "email": "Enter Your Email",
+        "reset": "Reset",
+        "checkEmail": "Check Your Mail",
+        "emailError": "Email is Required",
+        "error": "Email is Not Exist"
+    }],
+    "logIn": [{
+        "email": "Email",
+        "password": "Password",
+        "welcome": "Welcome Back",
+        "forgetPassword": "Forget Password",
+        "new": "NEW TO WUZZUF ?",
+        "join": "Join us",
+        "logIn": "Log In",
+        "emailError": "Email is Required",
+        "passwordError": "Password is Required",
+        "errorP": "Password is invaid",
+        "errorE": "Email is invaid",
+        "errorD": "Please valid your Email and Password"
+    }],
+        "signUp": [{
+        "email": "Email",
+        "password": "Password",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "welcome": "Sign Up and Start Applying For Jobs",
+        "already": "Already in WUZZUF ?",
+        "signUp": "Sign Up",
+        "logIn": "Log In",
+        "emailError": "Email is Required",
+        "passwordError": "Password is Required",
+        "firstNameError": "First Name is Required",
+        "lastNameError": "Last Name is Required",
+        "errorP": "Password is invaid",
+        "errorPasswordWeak": "Password must be more than 6 character",
+        "errorE": "Email is invaid",
+        "errorExist": "Email Already Exists",
+        "errorD": "Please valid your Email and Password",
+        "toast":"Sign Up Successfully !"
+    }]
+
+}]       

@@ -4,6 +4,8 @@ import { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../../contexts/authContext";
 import { db } from "../../firebase";
+import arLang from '../../language/navBar/العربية.json'
+import enLang from '../../language/navBar/English.json'
 
 import {
   faEdit,
@@ -14,9 +16,9 @@ import {
   faEnvelope,
   faCog,
   faBars,
-  faThin,
   faGlobe,
-  faSearch
+  faSearch,
+  faSignOut
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -27,7 +29,10 @@ export default function Navbar() {
   const [menueShowen, setmenueShowen] = useState(" ");
   const { currentUser, logout } = useAuth();
   const [userDetails, setUserDetails] = useState({});
+  const [SearchTerm, SetSearchTerm] = useState(" ");
   const history = useHistory();
+
+  const[json,Setjson] = useState(enLang);
 
   //toggle class showen function in drop down menue in nav
   const toggleShownClass = () => {
@@ -36,17 +41,24 @@ export default function Navbar() {
 
   // language
   const { lang, setLang } = useContext(languageContext);
+  useEffect(()=>
+  {
+    if(lang=="English") {Setjson(enLang)}
+    if(lang=='العربية'){Setjson(arLang)}
+  },[lang])
 
   //get user details according to auth
   useEffect(() => {
     if (currentUser) {
       const userId = currentUser.uid;
       console.log(userId);
-      db.collection("users").doc(userId).onSnapshot((doc) => {
-        if (doc.exists) {
-          setUserDetails(doc.data())
-        }
-      })
+      db.collection("users")
+        .doc(userId)
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            setUserDetails(doc.data());
+          }
+        });
     }
   }, [currentUser]);
 
@@ -54,8 +66,8 @@ export default function Navbar() {
   async function handleLogOut() {
     try {
       await logout().then(() => {
-        localStorage.removeItem("uid")
-        history.push("/login");
+        localStorage.removeItem("uid");
+        history.push("/registration");
       });
     } catch {
       console.log("faile to logout");
@@ -63,13 +75,13 @@ export default function Navbar() {
   }
 
   return (
-    <div>
+    <div dir={lang === "English" ? "ltr" : "rtl"}>
       <header className="main-header sticky-top">
         <div className="container">
           <div className="row">
             <div className="header-left col-xs-12 col-lg-7">
               <div className="row align-items-baseline ">
-                <NavLink to="/" className="wuzzuf-logo col col-3">
+                <NavLink to="" className="wuzzuf-logo col col-3">
                   <svg
                     viewBox="0 0 125 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -85,20 +97,20 @@ export default function Navbar() {
                 <nav className="header-nav col col-lg-9">
                   <ul className="d-flex list-unstyled">
                     <li className=" d-inline-flex">
-                      <NavLink to="/">explore</NavLink>
+                      <NavLink to="">{json[0].explore}</NavLink>
                     </li>
                     <li className="d-inline-flex">
-                      <NavLink to="/saved">saved</NavLink>
+                      <NavLink to="/saved">{json[0].saved}</NavLink>
                     </li>
                     <li className="d-inline-flex">
-                      <NavLink to="/applications-page">applications</NavLink>
+                      <NavLink to="/applications-page">{json[0].applications}</NavLink>
                     </li>
-                    <li className="d-inline-flex">
+                    <li className="d-inline-flex mt-2">
                       <FontAwesomeIcon
                         icon={faGlobe}
                         className="text-dark"
                         onClick={() => {
-                          setLang(lang == "English" ? "العربية" : "English");
+                          setLang(lang === "English" ? "العربية" : "English");
                         }}
                       />
                     </li>
@@ -115,13 +127,19 @@ export default function Navbar() {
                         <input
                           type="text"
                           className="search form-control"
-                          placeholder="Search jobs, companies.."
+                          placeholder={json[0].searchInput}
                           aria-label="Recipient's username"
                           aria-describedby="basic-addon2"
+                          onChange={(event) => {
+                            SetSearchTerm(event.target.value);
+                            console.log(event.target.value);
+                          }}
                         />
-                        <span className="input-group-text" id="basic-addon2">
-                          <FontAwesomeIcon icon={faSearch} />
-                        </span>
+                        <Link to={SearchTerm?`/search/${SearchTerm}`:`/search/ `}>
+                          <span className="input-group-text" id="basic-addon2">
+                            <FontAwesomeIcon icon={faSearch}/>
+                          </span>
+                        </Link>
                       </div>
                     </form>
                   </div>
@@ -134,7 +152,11 @@ export default function Navbar() {
                   >
                     <img
                       className="img-fluid nav-profile-img img-thumbnail rounded-circle"
-                      src={userDetails.imageUrl ? userDetails.imageUrl : "/default.png"}
+                      src={
+                        userDetails.imageUrl
+                          ? userDetails.imageUrl
+                          : "/default.png"
+                      }
                       alt=""
                     />
                     <FontAwesomeIcon className="menue-btn" icon={faBars} />
@@ -149,56 +171,40 @@ export default function Navbar() {
         <div
           className={`profile-settings-menue ${menueShowen}`}
           id="setting_menue"
+          style={lang === "English" ? {right:"3.5%"} : {left: "11.4%"} }
         >
           <div className="row profile-info setting-option">
-            <a className="col-3 img-container">
+            <a href className="col-3 img-container">
               <img
                 className="img-fluid rounded-circle dropdown-img"
-                src={userDetails.imageUrl ? userDetails.imageUrl : "/default.png"}
+                src={
+                  userDetails.imageUrl ? userDetails.imageUrl : "/default.png"
+                }
                 alt="avatar"
               />
             </a>
             <div className="col-9">
-              <NavLink to="/profile/general-info/" className="view-profile d-flex flex-column">
-                <span className="h5 user-name">{userDetails.firstName + " " + userDetails.lastName}</span>
+              <NavLink
+                to="/profile/general-info/"
+                className="view-profile d-flex flex-column"
+              >
+                <span className="h5 user-name">
+                  {userDetails.firstName + " " + userDetails.lastName}
+                </span>
                 <span className="email">{userDetails.email}</span>
-                <span className="view-profile-link">View profile</span>
+                <span className="view-profile-link">{json[0].viewProfile}</span>
               </NavLink>
             </div>
           </div>
           <hr />
           <div className="row row-cols-1 setting-links" id="setting_links">
             <NavLink
-              to={`/profile/general-info/`}
+              to="/profile/general-info"
               className="col setting-option"
               onClick={() => toggleShownClass()}
             >
-              <FontAwesomeIcon icon={faEdit} />
-              Edit Profile
-            </NavLink>
-            <NavLink
-              to="/Career"
-              className="col setting-option"
-              onClick={() => toggleShownClass()}
-            >
-              <FontAwesomeIcon icon={faHeart} /> Update career interests
-            </NavLink>
-            <hr />
-            <NavLink
-              to="/Career"
-              className="col setting-option"
-              onClick={() => toggleShownClass()}
-            >
-              <FontAwesomeIcon icon={faBookOpen} />
-              Career Readings
-            </NavLink>
-            <NavLink
-              to="/AboutUs"
-              className="col setting-option"
-              onClick={() => toggleShownClass()}
-            >
-              <FontAwesomeIcon icon={faBookReader} />
-              Learning opportunities
+              <FontAwesomeIcon icon={faEdit} className="me-2" />
+              {json[0].editProfile}
             </NavLink>
             <hr />
             <NavLink
@@ -206,26 +212,18 @@ export default function Navbar() {
               className="col setting-option"
               onClick={() => toggleShownClass()}
             >
-              <FontAwesomeIcon icon={faHandsHelping} />
-              About us
+              <FontAwesomeIcon icon={faHandsHelping} className="me-2" />
+              {json[0].aboutUs}
             </NavLink>
             <NavLink
               to={`/contact-us`}
               className="col setting-option"
               onClick={() => toggleShownClass()}
             >
-              <FontAwesomeIcon icon={faEnvelope} />
-              contact Us
+              <FontAwesomeIcon icon={faEnvelope} className="me-2" />
+              {json[0].contactUs}
             </NavLink>
             <hr />
-            <NavLink
-              to="/settings"
-              className="col setting-option"
-              onClick={() => toggleShownClass()}
-            >
-              <FontAwesomeIcon icon={faCog} />
-              Account settings
-            </NavLink>
             <Link
               className="col setting-option"
               onClick={() => {
@@ -233,7 +231,8 @@ export default function Navbar() {
                 toggleShownClass();
               }}
             >
-              logout
+              <FontAwesomeIcon icon={faSignOut} className="me-2" />
+              {json[0].logout}
             </Link>
           </div>
         </div>
