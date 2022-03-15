@@ -1,0 +1,17 @@
+[{
+    "searchInput": "ابحث باسم الوظيفة (مثال: مطور الواجهة الامامية)",
+    "filterTitle": "تصنيفات",
+    "country": "الدولة",
+    "countryEg": "مصر",
+    "countrySa":"المملكة العربية السعودية ",
+    "yearsExperiance":"سنوات الخبرة",
+    "year1":"سنة واحدة",
+    "year2":"سنتان",
+    "year3":"ثلاث سنوات",
+    "jobCategory":"فئة الوظيفة",
+    "jobCategoryEng":"هندسة",
+    "jobCategoryIt":"تكنولوجيا المعلومات",
+    "jobType":"نوع الوظيفة",
+    "jobTypePart":"دوام جزئي ",
+    "jobTypeFull":"دوام كامل"
+}]
