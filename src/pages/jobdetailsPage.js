@@ -7,6 +7,8 @@ import CardHeader from "./../components/jobModule/jobdetails/header";
 import JobRequirements from "./../components/jobModule/jobdetails/requrment";
 import explorjob from "../services/explorjob";
 import { languageContext } from "./../contexts/languageContext";
+import ar from "./../language/explore/ar.json";
+import en from "./../language/explore/en.json";
 import Footer from "./../components/footer/index";
 export default function JobDetailsPage(props) {
   let { jobId } = useParams();
@@ -17,7 +19,16 @@ export default function JobDetailsPage(props) {
   const [showMore, setShowMore] = useState(false);
 
   const { lang } = useContext(languageContext);
+  const [json, setJson] = useState(en);
 
+  useEffect(() => {
+    if (lang === "English") {
+      setJson(en);
+    }
+    if (lang === "العربية") {
+      setJson(ar);
+    }
+  }, [lang]);
   const loadingdetails = () => {
     explorjob
       .getSingleJob(companyId, jobId)
@@ -41,7 +52,10 @@ export default function JobDetailsPage(props) {
     <>
       <div className="container mt-5" dir={lang === "English" ? "ltr" : "rtl"}>
         <div className="row ms-2 me-2">
-          <div className="col-md-8 col-lg-8 col-sm-12 rounded">
+          <div
+            className="col-md-8 col-lg-8 col-sm-12 rounded"
+            dir={lang === "English" ? "ltr" : "rtl"}
+          >
             {jobDetails === undefined || isLoading === true ? (
               <div className="d-flex justify-content-center">
                 <div className="spinner-border" role="status">
@@ -50,25 +64,55 @@ export default function JobDetailsPage(props) {
               </div>
             ) : (
               <>
-                <CardHeader
-                  companyId={jobDetails.companyID}
-                  id={jobDetails.id}
-                  companyCountry={jobDetails.companyCountry}
-                  jobTitle={jobDetails.jobTitle}
-                  companyName={jobDetails.companyName}
-                  jobType={jobDetails.jobType}
-                  ImageUrl={jobDetails.logo}
-                  timestamp={jobDetails.date}
-                />
+                {lang === "English" ? (
+                  <>
+                    <CardHeader
+                      companyId={jobDetails.companyID}
+                      id={jobDetails.id}
+                      companyCountry={jobDetails.companyCountry}
+                      jobTitle={jobDetails.jobTitle}
+                      companyName={jobDetails.companyName}
+                      jobType={jobDetails.jobType}
+                      ImageUrl={jobDetails.logo}
+                      timestamp={jobDetails.date}
+                    />
 
-                <JobCard
-                  experience={jobDetails.experience}
-                  education={jobDetails.educationLevel}
-                  salary={jobDetails.salary}
-                  categories={jobDetails.jobCategories}
-                />
-                <JobDescription description={jobDetails.jobDescription} />
-                <JobRequirements requirements={jobDetails.jobRequirements} />
+                    <JobCard
+                      experience={jobDetails.experience}
+                      education={jobDetails.educationLevel}
+                      salary={jobDetails.salary}
+                      categories={jobDetails.jobCategoriesAR}
+                    />
+                    <JobDescription description={jobDetails.jobDescription} />
+                    <JobRequirements
+                      requirements={jobDetails.jobRequirements}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <CardHeader
+                      companyId={jobDetails.companyID}
+                      id={jobDetails.id}
+                      companyCountry={jobDetails.companyCountry}
+                      jobTitle={jobDetails.jobTitleAR}
+                      companyName={jobDetails.companyName}
+                      jobType={jobDetails.jobTypeAR}
+                      ImageUrl={jobDetails.logo}
+                      timestamp={jobDetails.date}
+                    />
+
+                    <JobCard
+                      experience={jobDetails.experienceAR}
+                      education={jobDetails.educationLevelAR}
+                      salary={jobDetails.salary}
+                      categories={jobDetails.jobCategoriesAR}
+                    />
+                    <JobDescription description={jobDetails.jobDescriptionAR} />
+                    <JobRequirements
+                      requirements={jobDetails.jobRequirementsAR}
+                    />
+                  </>
+                )}
               </>
             )}
           </div>
@@ -84,17 +128,17 @@ export default function JobDetailsPage(props) {
             </div>
           ) : (
             <div className="col-sm-3">
-              <aside className=" aside">
+              <aside className=" aside  ">
                 <section className="card-body sbar">
                   <h3 className="text-small companyname">
-                    About {jobDetails.companyName}
+                    {json.About} {jobDetails.companyName}
                   </h3>
                   <span className="subdetail">
                     {jobDetails.companyIndustry}
                   </span>
                   <span className="metainfo">
                     {jobDetails.companyCountry} •{jobDetails.companySize}
-                    employees
+                    {json.employees}
                   </span>
                   <p className="description">
                     <span className="little-descpt">
@@ -107,7 +151,7 @@ export default function JobDetailsPage(props) {
                         className="btn btn-sm text-primary"
                         onClick={() => setShowMore(!showMore)}
                       >
-                        {showMore ? "Show less" : "Show more"}
+                        {showMore ? `${json.showMore}` : `${json.showless}`}
                       </button>
                     </span>
                   </p>

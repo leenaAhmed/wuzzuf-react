@@ -1,8 +1,21 @@
 import React from "react";
 import download from "./../../../assets/download.png";
 import { Link } from "react-router-dom";
-
+import ar from "../../../language/explore/ar.json";
+import en from "../../../language/explore/en.json";
+import { useState, useEffect, useContext } from "react";
+import { languageContext } from "../../../contexts/languageContext";
 export default function CardHeader(props) {
+  const { lang, setLang } = useContext(languageContext);
+  const [json, setJson] = useState(en);
+  useEffect(() => {
+    if (lang === "English") {
+      setJson(en);
+    }
+    if (lang === "العربية") {
+      setJson(ar);
+    }
+  }, [lang]);
   const timestampToString = (timestamp) => {
     // const mydate = new Date(timestamp.toDate());
     // mydate.toLocaleDateString();
@@ -19,14 +32,14 @@ export default function CardHeader(props) {
   return (
     <>
       <div className="bigsec">
-        <div className="pos">
+        <div className={`"pos" ${lang !== "English" ? "text-start" : ""}`}>
           <img
             className="logo me-3 mt-2"
             src={`${!props.ImageUrl ? download : props.ImageUrl}`}
             width="95px"
             alt={props.title}
           />
-          <h1 className="title job_title">{props.jobTitle}</h1>
+          <h1 className="title job_title ">{props.jobTitle}</h1>
           <div className="btns">
             <span className="fullbtn"> {props.jobType}</span>
           </div>
@@ -39,7 +52,7 @@ export default function CardHeader(props) {
           </strong>
 
           <span className="post-time">
-            Posted {timestampToString(props.timestamp)} days ago
+            {json.posted} {timestampToString(props.timestamp)} {json.day}
           </span>
 
           <div className="green-div">
@@ -48,7 +61,7 @@ export default function CardHeader(props) {
             </span>
           </div>
 
-          <div className="staticapps">
+          {/* <div className="staticapps">
             <div className="apps">
               <strong className="appsnum">34</strong>
               <span className="appstext">
@@ -70,17 +83,17 @@ export default function CardHeader(props) {
                 <span className="viewtext">Not Selected</span>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           <div className="applaysec">
             <Link
               to={`/applytojob/${props.companyId}/${props.id}`}
               className="app_blue_color"
             >
-              <span className="applybtn">Apply For Job</span>
+              <span className="applybtn">{json.apply}</span>
             </Link>
 
-            <div className="mr-8">
+            <div className="mr-8 ">
               <button type="button" className="sharebtn">
                 <i size="24" className="css-16r7llb efou2fk0">
                   <svg

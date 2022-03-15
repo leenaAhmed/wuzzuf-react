@@ -3,11 +3,14 @@ import auth from "../firebase";
 
 const db = app.firestore();
 const user = auth.auth().currentUser;
+console.log(user);
+let username = localStorage.getItem("uid");
+console.log("User: " + username);
 let userId;
-if (!user) {
+if (user == null) {
   userId = localStorage.getItem("uid");
 } else {
-  // userId = user.uid;
+  userId = user.uid;
 }
 
 function addJobtoSavedPage(
@@ -19,7 +22,8 @@ function addJobtoSavedPage(
   jobtime,
   timestamp,
   categories,
-  experience
+  experience,
+  jobId
 ) {
   return new Promise((resolve, reject) => {
     const data = {
@@ -32,7 +36,10 @@ function addJobtoSavedPage(
       jobStatus: jobtime,
       timeRanges: timestamp,
       categoriey: categories,
-      experience: experience
+      experience: experience,
+      jobId: {
+        id: jobId
+      }
     };
     db.collection("users")
       .doc(userId)
@@ -48,23 +55,22 @@ function addJobtoSavedPage(
 }
 function getSavedJob() {
   return new Promise((resolve, reject) => {
-    console.log(auth.auth());
     db.collection("users")
       .doc(userId)
       .collection("savedJob")
-      .get()
-      .then((data) => {
-        const allacceptedJobs = data.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-          companyId: doc.data().companyID
-        }));
+      .onSnapshot(
+        (snapshot) => {
+          const allacceptedJobs = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data()
+          }));
 
-        resolve(allacceptedJobs);
-      })
-      .catch((e) => {
-        reject(e);
-      });
+          resolve(allacceptedJobs);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
   });
 }
 function deletSavedJob(jobId) {

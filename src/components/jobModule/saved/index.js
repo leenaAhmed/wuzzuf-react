@@ -2,15 +2,32 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-
+import ar from "../../../language/explore/ar.json";
+import en from "../../../language/explore/en.json";
 import download from "./../../../assets/download.png";
+import { languageContext } from "../../../contexts/languageContext";
+import { useState, useEffect, useContext } from "react";
+
 import saved from "../../../services/saved";
 const SavedCard = (props) => {
+  const { lang, setLang } = useContext(languageContext);
+  const [json, setJson] = useState(en);
+
+  useEffect(() => {
+    if (lang === "English") {
+      setJson(en);
+    }
+    if (lang === "العربية") {
+      setJson(ar);
+    }
+  }, [lang]);
+
   const HandleClick = (id) => {
     let jobId = id;
     saved
       .deletSavedJob(jobId)
       .then(() => {
+        localStorage.removeItem("id");
         toast.success("saved delted succesfully !", {
           position: toast.POSITION.TOP_LEFT
         });
@@ -64,12 +81,12 @@ const SavedCard = (props) => {
             className={`btn  text-secondary`}
             onClick={() => HandleClick(props.id)}
           >
-            <FontAwesomeIcon icon={faBookmark} className="me-1" />
-            UnSave
+            <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
+            {json.UnSave}
           </button>
-          <button className="btn   text-secondary hovering_btn">
-            <FontAwesomeIcon icon={faShare} className="me-1" />
-            Share
+          <button className="btn   text-secondary hovering_btn ">
+            <FontAwesomeIcon icon={faShare} className="me-1 ms-1" />
+            {json.share}
           </button>
         </div>
       </div>

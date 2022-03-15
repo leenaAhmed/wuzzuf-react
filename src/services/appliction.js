@@ -5,7 +5,7 @@ const db = app.firestore();
 const user = auth.auth().currentUser;
 
 let userId;
-if (!user) {
+if (user == null) {
   userId = localStorage.getItem("uid");
 } else {
   userId = user.uid;

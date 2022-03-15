@@ -5,22 +5,46 @@ import {
   faEyeSlash,
   faBookmark
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
+import { languageContext } from "../../../contexts/languageContext";
 import ShareModel from "./../model/index";
 import download from "./../../../assets/download.png";
 import saved from "../../../services/saved";
+import ar from "../../../language/explore/ar.json";
+import en from "../../../language/explore/en.json";
 import "./style.scss";
 
 const ExplorCard = (props) => {
   const [showModal, setShowModal] = useState(false);
-
+  const [save, setSave] = useState(false);
+  const { lang, setLang } = useContext(languageContext);
+  const [json, setJson] = useState(en);
   const handelShare = (id) => {
     setShowModal(!showModal);
   };
   const handleCloseModal = () => {
     setShowModal(!showModal);
   };
+  useEffect(() => {
+    if (lang === "English") {
+      setJson(en);
+    }
+    if (lang === "العربية") {
+      setJson(ar);
+    }
+  }, [lang]);
+
+  // const getSaved = () => {
+  //   props.saved.forEach((save) => {
+  //     setSave(save.id);
+  //     console.log(save.id);
+  //   });
+  // };
+  // useEffect(() => {
+  //   getSaved();
+  // });
+  let id = localStorage.getItem("id");
   const HandleClick = (id) => {
     saved
       .addJobtoSavedPage(
@@ -32,9 +56,12 @@ const ExplorCard = (props) => {
         props.jobtime,
         props.timestamp,
         props.categories,
-        props.experience
+        props.experience,
+        props.id
       )
       .then(() => {
+        setSave(true);
+        id = localStorage.setItem("id", id);
         toast.success("saved   succesfully !", {
           position: toast.POSITION.TOP_LEFT
         });
@@ -105,19 +132,59 @@ const ExplorCard = (props) => {
           <button
             id="save"
             className={`btn  hovering_btn ${
-              props.saved === true ? "save-active" : "text-secondary"
+              save === true || id === props.id
+                ? "save-active"
+                : "text-secondary"
+            }`}
+            onClick={() => HandleClick(props.id)}
+          >
+            <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
+            {save === true || id === props.id ? (
+              <span className=""> {json.saved}</span>
+            ) : (
+              <span className=""> {json.save}</span>
+            )}
+          </button>
+          {/* {props.saved.map(
+            (sav) =>
+              sav.id === props.id && (
+                <button id="save" className={`btn  hovering_btn save-active`}>
+                  <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
+                  Seved
+                </button>
+              )
+          )}
+          {props.saved.map(
+            (sav) =>
+              sav.id !== props.id && (
+                <button id="save" className="btn  hovering_btn text-secondary">
+                  <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
+                  {props.save}
+                </button>
+              )
+          )} */}
+          {/* {props.saved.map(
+            (sav) =>
+              sav.id !== props.id && (
+                
+              )
+          )} */}
+          {/* <button
+            id="save"
+            className={`btn  hovering_btn ${
+              props.saved === props.id ? "save-active" : "text-secondary"
             }`}
             onClick={() => HandleClick(props.id)}
           >
             <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
             {props.save}
-          </button>
+          </button> */}
           <button
             className="btn   text-secondary hovering_btn"
             onClick={() => handelShare(props.id)}
           >
             <FontAwesomeIcon icon={faShare} className="me-1 ms-1" />
-            {props.Share}
+            {json.share}
           </button>
           <ShareModel
             isOpen={showModal}
@@ -126,10 +193,10 @@ const ExplorCard = (props) => {
             quote={props.title}
             value={`${"jopdetails/" + props.companyId + "/" + props.id}`}
           />
-          <button className="btn   text-secondary hovering_btn">
+          {/* <button className="btn   text-secondary hovering_btn">
             <FontAwesomeIcon icon={faEyeSlash} className="me-1 ms-1" />
             {props.Hide}
-          </button>
+          </button> */}
         </div>
       </div>
     </>

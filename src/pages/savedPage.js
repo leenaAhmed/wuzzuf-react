@@ -2,13 +2,23 @@ import SavedCard from "./../components/jobModule/saved/index";
 import React, { useState, useEffect, useContext } from "react";
 import { languageContext } from "./../contexts/languageContext";
 import saved from "../services/saved";
+import ar from "./../language/explore/ar.json";
+import en from "./../language/explore/en.json";
 function SavedPage(props) {
   const [save, setInfoSave] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { lang, setLang } = useContext(languageContext);
+  const [json, setJson] = useState(en);
 
   //   const [count, setCount] = useState();
-
+  useEffect(() => {
+    if (lang === "English") {
+      setJson(en);
+    }
+    if (lang === "العربية") {
+      setJson(ar);
+    }
+  }, [lang]);
   const loadsavedjobs = () => {
     saved
       .getSavedJob()
@@ -46,15 +56,9 @@ function SavedPage(props) {
               </div>
             ))}
           <div>
-            {lang === "English" ? (
-              <h4>
-                <span id="jobNumSaved"> </span> Active Saved Job
-              </h4>
-            ) : (
-              <h4>
-                <span id="jobNumSaved"> </span> الوظائف المحفوظة
-              </h4>
-            )}
+            <h4>
+              <span id="jobNumSaved"> </span> {json.savedJob}
+            </h4>
           </div>
           {save.length > 0 ? (
             save.map((post) => {
@@ -77,11 +81,7 @@ function SavedPage(props) {
             })
           ) : (
             <div>
-              {lang === "English" ? (
-                <p>You have no saved data right now</p>
-              ) : (
-                <p>ليس لديك اي محتوى محفوظ</p>
-              )}
+              <p>{json.savedJobNodata}</p>
             </div>
           )}
         </div>
