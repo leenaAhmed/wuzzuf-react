@@ -15,7 +15,7 @@ export default function LoginProtectedRoute({ component: Component, ...rest }) {
         ) : (
           <Redirect to={
             {
-              pathname:"/main",
+              pathname:"/",
               state:{
                 from:props.location
               }

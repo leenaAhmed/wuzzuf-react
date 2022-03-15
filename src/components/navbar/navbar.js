@@ -81,7 +81,7 @@ export default function Navbar() {
           <div className="row">
             <div className="header-left col-xs-12 col-lg-7">
               <div className="row align-items-baseline ">
-                <NavLink to="/" className="wuzzuf-logo col col-3">
+                <NavLink to="" className="wuzzuf-logo col col-3">
                   <svg
                     viewBox="0 0 125 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +97,7 @@ export default function Navbar() {
                 <nav className="header-nav col col-lg-9">
                   <ul className="d-flex list-unstyled">
                     <li className=" d-inline-flex">
-                      <NavLink to="/">{json[0].explore}</NavLink>
+                      <NavLink to="">{json[0].explore}</NavLink>
                     </li>
                     <li className="d-inline-flex">
                       <NavLink to="/saved">{json[0].saved}</NavLink>
@@ -198,7 +198,7 @@ export default function Navbar() {
           <hr />
           <div className="row row-cols-1 setting-links" id="setting_links">
             <NavLink
-              to={`/profile/general-info/`}
+              to="/profile/general-info"
               className="col setting-option"
               onClick={() => toggleShownClass()}
             >
