@@ -719,12 +719,13 @@ function SearchPage(props) {
                     if (SearchTerm ==="")
                     {
                       return post ;
-                    }else if(post.data.jobTitle.toLowerCase().includes(SearchTerm.toLowerCase())
+                    }else if(post.data.jobTitle ||post.data.companyIndustry)
+                     {if(post.data.jobTitle.toLowerCase().includes(SearchTerm.toLowerCase())
                     // || post.data.companyIndustry.toLowerCase().includes(SearchTerm.toLowerCase())
                     )
                     {
                       return post ;
-                    }
+                    }}
                   }).map((post, index) => (
                   <div key={post.id}>
                     <Card
