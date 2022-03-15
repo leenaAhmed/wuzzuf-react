@@ -22,6 +22,7 @@ export default function GeneralInfo() {
     const [progress, setProgress] = useState(0)
     const [image, setImage] = useState("")
     const fileRef = useRef(null);
+    const [visible, setVisible] = useState(false);
     console.log(currentUser);
 
     //get user details according to auth
@@ -35,7 +36,12 @@ export default function GeneralInfo() {
                 }
             })
         }
+
     }, [currentUser])
+
+    useEffect(() => {
+        progress === 0 ? setVisible(false) : setVisible(true)
+    }, [progress])
 
     console.log(userDetails);
 
@@ -328,10 +334,14 @@ export default function GeneralInfo() {
                                         <h4>Profile Photo</h4>
                                         <p>You can upload a .jpg, .png, or .gif photo</p>
                                         <input ref={fileRef} type="file" onChange={imageChangeHandler} />
+
                                         <button onClick={uploadImage} className="btn btn-primary">Change Photo</button>
                                         {
                                             userDetails.imageUrl &&
                                             <button onClick={delteImageHandler} className="btn btn-danger bt-sm ms-1 cursor-pointer">delete</button>
+                                        }
+                                        {
+                                            visible && <p className="midsection__form__pa mt-2">Uploaded {progress} %</p>
                                         }
                                     </div>
                                 </section>

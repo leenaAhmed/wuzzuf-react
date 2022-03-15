@@ -19,15 +19,15 @@ export default function Sidebar() {
                                 >
                                     <li className="list-group-item">Career Interests</li>
                                 </NavLink> */}
-                                <NavLink
+                                {/* <NavLink
                                     to="/profile/learning-interests"
                                     activeClassName="sidebar__actived"
                                 >
                                     <li className="list-group-item">Learning Interests</li>
-                                </NavLink>
-                                <NavLink to="/profile/experience" activeClassName="sidebar__actived">
+                                </NavLink> */}
+                                {/* <NavLink to="/profile/experience" activeClassName="sidebar__actived">
                                     <li className="list-group-item ">Experiance</li>
-                                </NavLink>
+                                </NavLink> */}
                                 {/* <NavLink to="#">
                                     <li className="list-group-item">Education</li>
                                 </NavLink> */}
@@ -43,12 +43,12 @@ export default function Sidebar() {
                                 <NavLink to="/profile/cv">
                                     <li className="list-group-item">Upload CV</li>
                                 </NavLink>
-                                <NavLink
+                                {/* <NavLink
                                     to="/profile/additional-info"
                                     activeClassName="sidebar__actived"
                                 >
                                     <li className="list-group-item">Achievements</li>
-                                </NavLink>
+                                </NavLink> */}
                             </ul>
                         </div>
                     </div>
