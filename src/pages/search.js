@@ -57,7 +57,7 @@ function SearchPage(props) {
     setjobItems(response);
     if(
       e.target.checked&&e.target.name==='Egypt'&&queryCatrgory==='companyCountry',
-      e.target.checked&&e.target.name==="Saudi Arabia"&&queryCatrgory==='companyCountry',
+      e.target.checked&&e.target.name==="Saudi"&&queryCatrgory==='companyCountry',
       e.target.checked&&e.target.name==="1"&&queryCatrgory==='experience',
       e.target.checked&&e.target.name==="2"&&queryCatrgory==='experience',
       e.target.checked&&e.target.name==="3"&&queryCatrgory==='experience')
@@ -67,10 +67,10 @@ function SearchPage(props) {
             for (let i = 0; i < response.length; i++) 
             {
               if(response[i].data.companyCountry === 'Egypt' 
-              || response[i].data.companyCountry === 'Saudi Arabia'
-              || response[i].data.experience.includes('1')
-              || response[i].data.experience.includes('2')
-              || response[i].data.experience.includes('3'))
+              && response[i].data.companyCountry === 'Saudi Arabia'
+              && response[i].data.experience.includes('1')
+              && response[i].data.experience.includes('2')
+              && response[i].data.experience.includes('3'))
               {
                 console.log(response[i])
                 jobsArray.push(response[i])
@@ -89,16 +89,16 @@ function SearchPage(props) {
       // jobType
       else if(
         e.target.checked&&e.target.name==='Egypt'&&queryCatrgory==='companyCountry',
-        e.target.checked&&e.target.name==="Part time"&&queryCatrgory==='jobType',
-        e.target.checked&&e.target.name==="Full time"&&queryCatrgory==='jobType')
+        e.target.checked&&e.target.name==="Part"&&queryCatrgory==='jobType',
+        e.target.checked&&e.target.name==="Full"&&queryCatrgory==='jobType')
       {
           jobsArray = []
           setTimeout(() => {
               for (let i = 0; i < response.length; i++) 
               {
                 if(response[i].data.companyCountry === 'Egypt'
-                || response[i].data.jobType==="Part Time"
-                || response[i].data.jobType==="Full Time")
+                && response[i].data.jobType==="Part Time"
+                && response[i].data.jobType==="Full Time")
                 {
                   console.log(response[i])
                   jobsArray.push(response[i])
@@ -116,14 +116,14 @@ function SearchPage(props) {
         }
         else if(
           e.target.checked&&e.target.name==='Egypt'&&queryCatrgory==='companyCountry',
-          e.target.checked&&e.target.name==="Part time"&&queryCatrgory==='jobType')
+          e.target.checked&&e.target.name==="Part"&&queryCatrgory==='jobType')
         {
             jobsArray = []
             setTimeout(() => {
                 for (let i = 0; i < response.length; i++) 
                 {
                   if(response[i].data.companyCountry === 'Egypt'
-                  || response[i].data.jobType==="Part Time")
+                  && response[i].data.jobType==="Part Time")
                   {
                     console.log(response[i])
                     jobsArray.push(response[i])
@@ -141,14 +141,14 @@ function SearchPage(props) {
           }
           else if(
             e.target.checked&&e.target.name==='Egypt'&&queryCatrgory==='companyCountry',
-            e.target.checked&&e.target.name==="Full time"&&queryCatrgory==='jobType')
+            e.target.checked&&e.target.name==="Full"&&queryCatrgory==='jobType')
           {
               jobsArray = []
               setTimeout(() => {
                   for (let i = 0; i < response.length; i++) 
                   {
                     if(response[i].data.companyCountry === 'Egypt'
-                    || response[i].data.jobType==="Full Time")
+                    && response[i].data.jobType==="Full Time")
                     {
                       console.log(response[i])
                       jobsArray.push(response[i])
@@ -165,7 +165,7 @@ function SearchPage(props) {
               setIsLoading(true);
             }
             else if(
-              e.target.checked&&e.target.name==="Full time"&&queryCatrgory==='jobType')
+              e.target.checked&&e.target.name==="Full"&&queryCatrgory==='jobType')
             {
                 jobsArray = []
                 setTimeout(() => {
@@ -188,7 +188,7 @@ function SearchPage(props) {
                 setIsLoading(true);
               }
               else if(
-                e.target.checked&&e.target.name==="Part time"&&queryCatrgory==='jobType')
+                e.target.checked&&e.target.name==="Part"&&queryCatrgory==='jobType')
               {
                   jobsArray = []
                   setTimeout(() => {
@@ -220,8 +220,8 @@ function SearchPage(props) {
               for (let i = 0; i < response.length; i++) 
               {
                 if(response[i].data.companyCountry === 'Egypt'
-                || response[i].data.jobCategories.includes('Engineering')
-                || response[i].data.jobCategories.includes('IT'))
+                && response[i].data.jobCategories.includes('Engineering')
+                && response[i].data.jobCategories.includes('IT'))
                 {
                   console.log(response[i])
                   jobsArray.push(response[i])
@@ -246,7 +246,7 @@ function SearchPage(props) {
                 for (let i = 0; i < response.length; i++) 
                 {
                   if( response[i].data.jobCategories.includes('Engineering')
-                  || response[i].data.jobCategories.includes('IT'))
+                  && response[i].data.jobCategories.includes('IT'))
                   {
                     console.log(response[i])
                     jobsArray.push(response[i])
@@ -318,8 +318,8 @@ function SearchPage(props) {
               for (let i = 0; i < response.length; i++) 
               {
                 if(response[i].data.companyCountry === 'Egypt'
-                || response[i].data.experience.includes('1')
-                || response[i].data.experience.includes('3'))
+                && response[i].data.experience.includes('1')
+                && response[i].data.experience.includes('3'))
                 {
                   console.log(response[i])
                   jobsArray.push(response[i])
@@ -344,7 +344,7 @@ function SearchPage(props) {
                 for (let i = 0; i < response.length; i++) 
                 {
                   if(response[i].data.companyCountry === 'Egypt'
-                  || response[i].data.experience.includes('1'))
+                  && response[i].data.experience.includes('1'))
                   {
                     console.log(response[i])
                     jobsArray.push(response[i])
@@ -431,14 +431,14 @@ function SearchPage(props) {
               }
      else if(
       e.target.checked&&e.target.name==='Egypt'&&queryCatrgory==='companyCountry',
-      e.target.checked&&e.target.name==="Saudi Arabia"&&queryCatrgory==='companyCountry')
+      e.target.checked&&e.target.name==="Saudi"&&queryCatrgory==='companyCountry')
     {
         jobsArray = []
         setTimeout(() => {
             for (let i = 0; i < response.length; i++) 
             {
               if(response[i].data.companyCountry === 'Egypt' 
-              || response[i].data.companyCountry === 'Saudi Arabia')
+              && response[i].data.companyCountry === 'Saudi Arabia')
               {
                 jobsArray.push(response[i])
               }  
@@ -453,6 +453,27 @@ function SearchPage(props) {
 
         setIsLoading(true);
       }
+      if( e.target.checked&&e.target.name==="Saudi"&&queryCatrgory==='companyCountry')
+      {
+          jobsArray = []
+          setTimeout(() => {
+              for (let i = 0; i < response.length; i++) 
+              {
+                if( response[i].data.companyCountry === 'Saudi Arabia')
+                {
+                  jobsArray.push(response[i])
+                }  
+              }
+            
+            console.log(jobsArray)
+            setjobItems(jobsArray);
+            setIsLoading(false);
+            
+          }, 1000);
+          console.log(response);
+  
+          setIsLoading(true);
+        }
       else if(
         e.target.checked&&e.target.name==='Egypt'&&queryCatrgory==='companyCountry')
       {
@@ -554,7 +575,7 @@ function SearchPage(props) {
                         <input
                           type="checkbox"
                           id="flexCheckIndeterminate"
-                          name="Saudi Arabia"
+                          name="Saudi"
                           onChange={(e) => {
                             filtering('companyCountry',e)
                           }}
@@ -665,7 +686,7 @@ function SearchPage(props) {
                         <input
                           type="checkbox"
                           id="flexCheckIndeterminate"
-                          name="Part time"
+                          name="Part"
                           onChange={(e) => {
                             filtering('jobType',e)
                           }}
@@ -681,7 +702,7 @@ function SearchPage(props) {
                         <input
                           type="checkbox"
                           id="flexCheckIndeterminate"
-                          name="Full time"
+                          name="Full"
                           onChange={(e) => {
                             filtering('jobType',e)
                           }}

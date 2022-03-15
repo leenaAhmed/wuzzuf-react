@@ -42,7 +42,7 @@ function App() {
                 exact
                 component={ApplyToJob}
               />
-              <Route path="/search" exact component={SearchPage} />
+              <Route path="/search/:searchTerm" exact component={SearchPage} />
               <Route path="/profile/general-info" exact component={EditProfile} />
               <Route path="/about-us" exact component={AboutUs} />
               <Route path="/contact-us" exact component={ContactUs} />
