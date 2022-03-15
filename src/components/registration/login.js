@@ -35,8 +35,6 @@ function Login() {
         setFormError({ ...formError, password: "" });
       }
     }
-
-
   }
   const handleInputs = (e) => {
     if (e.target.name == "email") {
