@@ -10,7 +10,7 @@ import { useState, useEffect, useContext } from "react";
 
 import saved from "../../../services/saved";
 const SavedCard = (props) => {
-  const { lang, setLang } = useContext(languageContext);
+  const { lang } = useContext(languageContext);
   const [json, setJson] = useState(en);
 
   useEffect(() => {
