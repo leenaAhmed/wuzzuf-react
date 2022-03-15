@@ -10,7 +10,7 @@ import arLang from '../../../language/applicationPage/العربية.json'
 import enLang from '../../../language/applicationPage/English.json'
 const PageAppliction = () => {
 
-  const { currentUser } = useAuth();
+
   const [applicationLength, setapplicationLength] = useState(0);
 
 
@@ -26,7 +26,7 @@ const PageAppliction = () => {
   },[lang])
  
   async function loadApplication() {
-    const jobdata = db.collection('users').doc(currentUser.uid).collection('applicion');
+    const jobdata = db.collection('users').doc(localStorage.getItem("uid")).collection('applicion');
     const querySnapshot = await jobdata.get();
     setapplicationLength(querySnapshot.docs.length);
     if(querySnapshot.docs.length>0)

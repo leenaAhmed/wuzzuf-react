@@ -28,9 +28,6 @@ function SearchCard() {
                 value=""
               />
             </div>
-            <button type="button" class="css-6j0vez ezfki8j0">
-              Search
-            </button>
           </div>
         </div>
         <div tabindex="1"></div>

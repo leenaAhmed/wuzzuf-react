@@ -1,0 +1,17 @@
+[{
+    "searchInput": "Search by Job Title (e.g. FrontEnd )",
+    "filterTitle": "Filters",
+    "country": "Country",
+    "countryEg": "Egypt",
+    "countrySa":"Saudi Arabia  ",
+    "yearsExperiance":" Years of experiance",
+    "year1":"1 Year",
+    "year2":"2 Years",
+    "year3":" 3 Years",
+    "jobCategory":"Job category",
+    "jobCategoryEng":"Engineering",
+    "jobCategoryIt":"IT/Software Development",
+    "jobType":"Job type",
+    "jobTypePart":"Part time",
+    "jobTypeFull":"Full time"
+}]

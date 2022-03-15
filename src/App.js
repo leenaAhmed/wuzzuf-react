@@ -39,7 +39,7 @@ function App() {
                 exact
                 component={ApplyToJob}
               />
-              <Route path="/search" exact component={SearchPage} />
+              <Route path="/search/:searchTerm" exact component={SearchPage} />
               <LoginProtectedRoute path="/sign-up" exact component={SignUp} />
               <LoginProtectedRoute path="/login" exact component={Login} />
               <LoginProtectedRoute

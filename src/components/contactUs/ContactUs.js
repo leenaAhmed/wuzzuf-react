@@ -17,8 +17,6 @@ const ContactUs =()=>
         MessageContact: "",
         UserId: ""
       });
-
-    const { currentUser } = useAuth();
     const[json,Setjson] = useState(enLang);
     useEffect(()=>
     {
@@ -54,7 +52,7 @@ const ContactUs =()=>
         SetState({
           ...State,
           [e.target.id]: [e.target.value],
-          UserId:currentUser.uid
+          UserId:localStorage.getItem("uid")
         });
       };
     return (
