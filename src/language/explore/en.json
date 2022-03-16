@@ -23,5 +23,17 @@
   "categories": "Job Categories",
   "posted": "posted",
   "day": "day",
+  "position": "Why should we hire you for this position?  ",
+  "sample": "Can you provide us with a sample of your work?  ",
+  "responsibilities": "Describe your current job responsibilities",
+  "form": "Application Form",
+  "submit": " Submit Application",
+  "cancel": " Cancel",
+  "View": " View job details",
+  "placeholder": "Write your answer here..",
+
+  "applyToJob": "The hiring team at    ",
+  "applyToRequire": "requires you to answer the below questions.",
+  "answer": "Your answers reflect your vital skills and experience. Providing excellent answers sets you apart from the competition.",
   "sidebarSubskill": "Users with 10+ related skills have more chances to get selected by employers"
 }
