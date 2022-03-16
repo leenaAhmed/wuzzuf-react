@@ -81,7 +81,7 @@ export default function JobDetailsPage(props) {
                       experience={jobDetails.experience}
                       education={jobDetails.educationLevel}
                       salary={jobDetails.salary}
-                      categories={jobDetails.jobCategoriesAR}
+                      categories={jobDetails.jobCategories}
                     />
                     <JobDescription description={jobDetails.jobDescription} />
                     <JobRequirements

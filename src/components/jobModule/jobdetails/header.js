@@ -85,7 +85,7 @@ export default function CardHeader(props) {
             </ul>
           </div> */}
 
-          <div className="applaysec">
+          <div className="applaysec ">
             <Link
               to={`/applytojob/${props.companyId}/${props.id}`}
               className="app_blue_color"
