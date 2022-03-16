@@ -4,7 +4,7 @@ import en from "../../../language/explore/en.json";
 import { useState, useEffect, useContext } from "react";
 import { languageContext } from "../../../contexts/languageContext";
 export default function JobCard(props) {
-  const { lang, setLang } = useContext(languageContext);
+  const { lang } = useContext(languageContext);
   const [json, setJson] = useState(en);
   useEffect(() => {
     if (lang === "English") {

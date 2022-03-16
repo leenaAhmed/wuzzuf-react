@@ -15,7 +15,8 @@ import ar from "../../../language/explore/ar.json";
 import en from "../../../language/explore/en.json";
 import "./style.scss";
 
-const ExplorCard = (props) => {
+const ExplorCard = ({ item }) => {
+  console.log(item);
   const [showModal, setShowModal] = useState(false);
   const [save, setSave] = useState(false);
   const { lang, setLang } = useContext(languageContext);
@@ -35,33 +36,14 @@ const ExplorCard = (props) => {
     }
   }, [lang]);
 
-  // const getSaved = () => {
-  //   props.saved.forEach((save) => {
-  //     setSave(save.id);
-  //     console.log(save.id);
-  //   });
-  // };
-  // useEffect(() => {
-  //   getSaved();
-  // });
   let id = localStorage.getItem("id");
-  const HandleClick = (id) => {
+  const HandleClick = (jobid) => {
+    console.log(jobid);
     saved
-      .addJobtoSavedPage(
-        props.componyName,
-        props.city,
-        props.ImageUrl,
-        props.companyIndustry,
-        props.title,
-        props.jobtime,
-        props.timestamp,
-        props.categories,
-        props.experience,
-        props.id
-      )
+      .addJobtoSavedPage(item.data)
       .then(() => {
         setSave(true);
-        id = localStorage.setItem("id", id);
+        localStorage.setItem("id", jobid);
         toast.success("saved   succesfully !", {
           position: toast.POSITION.TOP_LEFT
         });
@@ -85,6 +67,9 @@ const ExplorCard = (props) => {
 
     return Difference_In_Time;
   };
+
+  if (lang === "English") {
+  }
   return (
     <>
       <div className="job__detail bg-body card bx-1 bt-1 mb-3">
@@ -92,39 +77,65 @@ const ExplorCard = (props) => {
           <div className="card-body ">
             <div>
               <Link
-                to={`/jopdetails/${props.companyId}/${props.id}`}
+                to={`/jopdetails/${item.companyId}/${item.id}`}
                 className="app_blue_color"
               >
-                <span className="app_blue_color job_title">{props.title}</span>
+                <span className="app_blue_color job_title">
+                  {lang === "English" ? (
+                    <span>{item.data.jobTitle}</span>
+                  ) : (
+                    <span>{item.data.jobTitleAR}</span>
+                  )}
+                </span>
               </Link>
               <i className="badge text-secondary bg-light fw-light">
-                {props.jobtime}
+                {lang === "English" ? (
+                  <span> {item.data.jobType}</span>
+                ) : (
+                  <span>{item.data.jobTypeAR}</span>
+                )}
               </i>
               <p>
                 <small className="text-dark text-normal job_title">
-                  {props.componyName}
+                  {lang === "English" ? (
+                    <span> {item.data.companyName}</span>
+                  ) : (
+                    <span>{item.data.jobTypeAR}</span>
+                  )}
                 </small>
 
                 <span>-</span>
-                <small className="text-secondary ">{props.city}</small>
+                <small className="text-secondary ">
+                  {item.data.companyCountry}
+                </small>
               </p>
             </div>
             <div className="text-secondary fs-6">
-              <small>
-                {props.categories} . {props.experience} experience .
-                {props.companyIndustry} .
-              </small>
-
+              {lang === "English" ? (
+                <small>
+                  {item.data.careerLevel} . {item.data.jobCategories} .
+                  {item.data.experience} experience .{item.data.companyIndustry}{" "}
+                  .
+                </small>
+              ) : (
+                <small>
+                  {item.data.careerLevelAR} . {item.data.jobCategoriesAR} .
+                  {item.data.experienceAR} experience .
+                  {item.data.companyIndustry} .
+                </small>
+              )}
               <time className="text-success text-small fs-6 fw-light">
-                <i>{timestampToString(props.timestamp)} Day</i>
+                <i>
+                  {timestampToString(item.data.date)} {json.day}
+                </i>
               </time>
             </div>
           </div>
           <a href="company" className="mt-4 me-4">
             <img
-              src={`${!props.ImageUrl ? download : props.ImageUrl}`}
+              src={`${!item.data.logo ? download : item.data.logo}`}
               width="85px"
-              alt={props.title}
+              alt={item.data.jobTitle}
             />
           </a>
         </header>
@@ -132,56 +143,21 @@ const ExplorCard = (props) => {
           <button
             id="save"
             className={`btn  hovering_btn ${
-              save === true || id === props.id
-                ? "save-active"
-                : "text-secondary"
+              save === true || id === item.id ? "save-active" : "text-secondary"
             }`}
-            onClick={() => HandleClick(props.id)}
+            onClick={() => HandleClick(item.data.id)}
           >
             <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
-            {save === true || id === props.id ? (
+            {save === true || id === item.data.id ? (
               <span className=""> {json.saved}</span>
             ) : (
               <span className=""> {json.save}</span>
             )}
           </button>
-          {/* {props.saved.map(
-            (sav) =>
-              sav.id === props.id && (
-                <button id="save" className={`btn  hovering_btn save-active`}>
-                  <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
-                  Seved
-                </button>
-              )
-          )}
-          {props.saved.map(
-            (sav) =>
-              sav.id !== props.id && (
-                <button id="save" className="btn  hovering_btn text-secondary">
-                  <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
-                  {props.save}
-                </button>
-              )
-          )} */}
-          {/* {props.saved.map(
-            (sav) =>
-              sav.id !== props.id && (
-                
-              )
-          )} */}
-          {/* <button
-            id="save"
-            className={`btn  hovering_btn ${
-              props.saved === props.id ? "save-active" : "text-secondary"
-            }`}
-            onClick={() => HandleClick(props.id)}
-          >
-            <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
-            {props.save}
-          </button> */}
+
           <button
             className="btn   text-secondary hovering_btn"
-            onClick={() => handelShare(props.id)}
+            onClick={() => handelShare(item.id)}
           >
             <FontAwesomeIcon icon={faShare} className="me-1 ms-1" />
             {json.share}
@@ -190,12 +166,12 @@ const ExplorCard = (props) => {
             isOpen={showModal}
             closeModal={handleCloseModal}
             toggle={handelShare}
-            quote={props.title}
-            value={`${"jopdetails/" + props.companyId + "/" + props.id}`}
+            quote={item.data.jobTitle}
+            value={`${"jopdetails/" + item.companyId + "/" + item.id}`}
           />
           {/* <button className="btn   text-secondary hovering_btn">
             <FontAwesomeIcon icon={faEyeSlash} className="me-1 ms-1" />
-            {props.Hide}
+            {item.Hide}
           </button> */}
         </div>
       </div>

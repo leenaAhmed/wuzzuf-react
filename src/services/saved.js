@@ -13,33 +13,11 @@ if (user == null) {
   userId = user.uid;
 }
 
-function addJobtoSavedPage(
-  componyName,
-  city,
-  ImageUrl,
-  companyIndustry,
-  title,
-  jobtime,
-  timestamp,
-  categories,
-  experience,
-  jobId
-) {
+function addJobtoSavedPage({ ...saveddata }) {
   return new Promise((resolve, reject) => {
     const data = {
       saved: true,
-      componyName: componyName,
-      location: city,
-      companyLogo: ImageUrl,
-      companyIndustry: companyIndustry,
-      jobTitle: title,
-      jobStatus: jobtime,
-      timeRanges: timestamp,
-      categoriey: categories,
-      experience: experience,
-      jobId: {
-        id: jobId
-      }
+      ...saveddata
     };
     db.collection("users")
       .doc(userId)

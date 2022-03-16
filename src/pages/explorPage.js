@@ -107,51 +107,12 @@ function ExplorPage() {
               </div>
             )}
 
-            {lang === "English"
-              ? menuItems &&
-                menuItems.map((post, index) => (
-                  <div key={post.id}>
-                    <Card
-                      id={post.id}
-                      companyId={post.companyId}
-                      componyName={post.data.companyName}
-                      companyIndustry={post.data.companyIndustry}
-                      city={post.data.companyCountry}
-                      ImageUrl={post.data.logo}
-                      saved={save.map((sav) => sav.data.jobId)}
-                      title={post.data.jobTitle}
-                      categories={post.data.jobCategories}
-                      country={post.data.Country}
-                      dateTime={post.data.date.Time}
-                      jobtime={post.data.jobType}
-                      experience={post.data.experience}
-                      careerLevel={post.data.careerLevel}
-                      timestamp={post.data.date}
-                    />
-                  </div>
-                ))
-              : menuItems &&
-                menuItems.map((post, index) => (
-                  <div key={post.id}>
-                    <Card
-                      id={post.id}
-                      companyId={post.companyId}
-                      componyName={post.data.companyName}
-                      companyIndustry={post.data.companyIndustry}
-                      city={post.data.companyCountry}
-                      ImageUrl={post.data.logo}
-                      saved={post.data.saved}
-                      title={post.data.jobTitleAR}
-                      categories={post.data.jobCategoriesAR}
-                      country={post.data.Country}
-                      dateTime={post.data.date.Time}
-                      jobtime={post.data.jobTypeAR}
-                      experience={post.data.experienceAR}
-                      careerLevel={post.data.careerLevelAR}
-                      timestamp={post.data.date}
-                    />
-                  </div>
-                ))}
+            {menuItems &&
+              menuItems.map((post, index) => (
+                <div key={post.id}>
+                  <Card item={post} />
+                </div>
+              ))}
           </div>
           {/*prograss */}
           <div className="jobs__prograss col-lg-3 col-md-12 col-12 ">

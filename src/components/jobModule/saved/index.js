@@ -62,7 +62,7 @@ const SavedCard = (props) => {
             <div className="text-secondary fs-6">
               <small>
                 {props.categories} . {props.experience} .{" "}
-                {props.companyIndustry}
+                {props.companyIndustry} , {props.careerLevel}
               </small>
               <time className="text-success">1day</time>
             </div>

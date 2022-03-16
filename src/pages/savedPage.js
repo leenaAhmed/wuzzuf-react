@@ -7,7 +7,7 @@ import en from "./../language/explore/en.json";
 function SavedPage(props) {
   const [save, setInfoSave] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { lang, setLang } = useContext(languageContext);
+  const { lang } = useContext(languageContext);
   const [json, setJson] = useState(en);
 
   //   const [count, setCount] = useState();
@@ -60,21 +60,41 @@ function SavedPage(props) {
               <span id="jobNumSaved"> </span> {json.savedJob}
             </h4>
           </div>
+
           {save.length > 0 ? (
             save.map((post) => {
-              return (
+              return lang === "English" ? (
                 <div key={post.id}>
                   <SavedCard
                     id={post.id}
                     saved={post.data.saved}
                     title={post.data.jobTitle}
-                    city={post.data.location}
-                    categories={post.data.categoriey}
-                    country={post.data.Country}
-                    componyName={post.data.componyName}
-                    ImageUrl={post.data.companyLogo}
+                    city={post.data.companyCountry}
+                    categories={post.data.jobCategories}
+                    country={post.data.companyCountry}
+                    componyName={post.data.companyName}
+                    ImageUrl={post.data.logo}
                     experience={post.data.experience}
                     companyIndustry={post.data.companyIndustry}
+                    careerLevel={post.data.careerLevel}
+                    time={post.data.jobType}
+                  />
+                </div>
+              ) : (
+                <div key={post.id}>
+                  <SavedCard
+                    id={post.id}
+                    saved={post.data.saved}
+                    title={post.data.jobTitleAR}
+                    city={post.data.companyCountry}
+                    categories={post.data.jobCategoriesAR}
+                    country={post.data.companyCountry}
+                    componyName={post.data.companyName}
+                    careerLevel={post.data.careerLevelAR}
+                    ImageUrl={post.data.logo}
+                    experience={post.data.experienceAR}
+                    companyIndustry={post.data.companyIndustry}
+                    time={post.data.jobTypeAR}
                   />
                 </div>
               );
