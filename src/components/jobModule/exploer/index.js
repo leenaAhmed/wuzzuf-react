@@ -120,8 +120,7 @@ const ExplorCard = ({ item }) => {
               ) : (
                 <small>
                   {item.data.careerLevelAR} . {item.data.jobCategoriesAR} .
-                  {item.data.experienceAR} experience .
-                  {item.data.companyIndustry} .
+                  {item.data.experienceAR} خبرة .
                 </small>
               )}
               <time className="text-success text-small fs-6 fw-light">

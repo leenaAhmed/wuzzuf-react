@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import './editProfile.scss'
+import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext"
 import { db, storage } from "../../firebase";
 import Select from 'react-select';
@@ -17,6 +18,7 @@ export default function GeneralInfo() {
     const yearOptions = displayYearInSelect()
     const { lang, setLang } = useContext(languageContext);
     const [json, setJson] = useState(en);
+    const history = useHistory();
     const [progress, setProgress] = useState(0)
     const [image, setImage] = useState("")
     const fileRef = useRef(null);

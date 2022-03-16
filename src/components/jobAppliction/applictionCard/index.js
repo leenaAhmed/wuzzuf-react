@@ -65,15 +65,6 @@ function ApplictionCard(props) {
                 </div>
               </div>
             </div>
-            <div>
-              <button
-                className="btn text-primary  mt-3"
-                type="submit"
-                onClick={() => sendApplicationId(props.applicationId)}
-              >
-                {json[0].editButton}
-              </button>
-            </div>
           </div>
         </div>
       </div>

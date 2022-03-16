@@ -749,51 +749,13 @@ function SearchPage(props) {
                     }}
                   }).map((post, index) => (
                   <div key={post.id}>
-                    <Card
-                      id={post.id}
-                      companyId={post.companyId}
-                      componyName={post.data.companyName}
-                      companyIndustry={post.data.companyIndustry}
-                      city={post.data.companyCountry}
-                      ImageUrl={post.data.logo}
-                      saved={post.data.saved}
-                      title={post.data.jobTitle}
-                      categories={post.data.jobCategories}
-                      country={post.data.Country}
-                      dateTime={post.data.date.Time}
-                      jobtime={post.data.jobType}
-                      experience={post.data.experience}
-                      careerLevel={post.data.careerLevel}
-                      timestamp={post.data.date}
-                      save={"Save"}
-                      Share={"Share"}
-                      Hide={"Hide"}
-                    />
+                    <Card item={post} />
                   </div>
                 ))
               : jobsItems &&
               jobsItems.map((post, index) => (
                   <div key={post.id}>
-                    <Card
-                      id={post.id}
-                      companyId={post.companyId}
-                      componyName={post.data.companyName}
-                      companyIndustry={post.data.companyIndustry}
-                      city={post.data.companyCountry}
-                      ImageUrl={post.data.logo}
-                      saved={post.data.saved}
-                      title={post.data.jobTitleAR}
-                      categories={post.data.jobCategoriesAR}
-                      country={post.data.Country}
-                      dateTime={post.data.date.Time}
-                      jobtime={post.data.jobTypeAR}
-                      experience={post.data.experienceAR}
-                      careerLevel={post.data.careerLevel}
-                      timestamp={post.data.date}
-                      save={"حفظ"}
-                      Share={"مشاركة"}
-                      Hide={"اخفاء"}
-                    />
+                   <Card item={post} />
                   </div>
                 ))}
           </div>

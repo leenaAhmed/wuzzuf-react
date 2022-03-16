@@ -47,7 +47,7 @@ function ForgetPassword() {
                 dir: "rtl"
             })
             setTimeout(() => {
-                history.push("/login")
+                history.push("/registration")
             }, 1500)
 
         } catch (error) {

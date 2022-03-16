@@ -89,7 +89,7 @@ const PageAppliction = () => {
                         <ApplictionCard
                           companyname={job.datauser.companyName}
                           title={job.datauser.jobTitle}
-                          location={job.datauser.companylocation}
+                          location={job.datauser.companyCountry}
                           ImageUrl={job.datauser.imageUrl}
                           timestamp={job.datauser.timestamp}
                           applicationId = {job.id}
@@ -97,7 +97,7 @@ const PageAppliction = () => {
                         <ApplictionCard
                         companyname={job.datauser.companyName}
                         title={job.datauser.jobTitleAR}
-                        location={job.datauser.companylocationAR}
+                        location={job.datauser.companyCountry}
                         ImageUrl={job.datauser.imageUrl}
                         timestamp={job.datauser.timestamp}
                         applicationId = {job.id}

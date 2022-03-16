@@ -102,6 +102,7 @@ function SignUp() {
             setError("")
             await signUp(emailRef.current.value, passwordRef.current.value).then((auth) => {
                 if (auth) {
+                    localStorage.setItem("uid",auth.user.uid)
                     db.collection("users")
                         .doc(auth.user.uid)
                         .set({
@@ -112,7 +113,7 @@ function SignUp() {
                             toast.success(`${json[0].signUp[0].toast}`, {
                                 position: toast.POSITION.TOP_LEFT
                             })
-                            history.push("/")
+                            window.location.href = '/';
                         })
                 }
             })

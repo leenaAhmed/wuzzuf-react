@@ -3,9 +3,9 @@ import auth from "../firebase";
 
 const db = app.firestore();
 const user = auth.auth().currentUser;
-console.log(user);
+// console.log(user);
 let username = localStorage.getItem("uid");
-console.log("User: " + username);
+// console.log("User: " + username);
 let userId;
 if (user == null) {
   userId = localStorage.getItem("uid");

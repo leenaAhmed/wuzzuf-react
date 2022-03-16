@@ -63,7 +63,7 @@ export default function Sidebar() {
                             </ul>
                         </div>
                     </div>
-                    <div className="col-md-12 mt-3 col-lg-12 d-lg-block d-md-none d-none">
+                    {/* <div className="col-md-12 mt-3 col-lg-12 d-lg-block d-md-none d-none">
                         <div className="sidebar">
                             <div className="sidebar__fonts">
                                 <h6>Improve Your Profile</h6>
@@ -86,7 +86,7 @@ export default function Sidebar() {
                                 <p>Your profile strength is 67%</p>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </aside>
         </>

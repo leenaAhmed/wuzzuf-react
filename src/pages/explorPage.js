@@ -69,7 +69,7 @@ function ExplorPage() {
   useEffect(() => {
     if (currentUser) {
       const userId = currentUser.uid;
-      console.log(userId);
+      // console.log(userId);
       db.collection("users")
         .doc(userId)
         .onSnapshot((doc) => {
@@ -77,7 +77,7 @@ function ExplorPage() {
             setUserDetails(doc.data());
           }
         });
-      console.log(userDetails);
+      // console.log(userDetails);
     }
   }, [currentUser]);
 

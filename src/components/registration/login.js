@@ -68,7 +68,7 @@ function Login() {
           localStorage.setItem("uid", user.user.uid);
         }
       );
-      history.push("/");
+      window.location.href = "/";
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":

@@ -23,6 +23,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { languageContext } from "./../../contexts/languageContext";
+import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
   //nav bar class showen state
@@ -30,9 +31,19 @@ export default function Navbar() {
   const { currentUser, logout } = useAuth();
   const [userDetails, setUserDetails] = useState({});
   const [SearchTerm, SetSearchTerm] = useState(" ");
+  const [ShowNav, SetShowNav] = useState("d-none");
   const history = useHistory();
+  const Location = useLocation();
 
   const[json,Setjson] = useState(enLang);
+
+    useEffect(() => {
+    if (Location.pathname === "/registration" || Location.pathname === "/registration/sign-up") {
+      SetShowNav("d-none");
+    } else{
+      SetShowNav(" ");
+    }
+  }, []);
 
   //toggle class showen function in drop down menue in nav
   const toggleShownClass = () => {
@@ -67,7 +78,7 @@ export default function Navbar() {
     try {
       await logout().then(() => {
         localStorage.removeItem("uid");
-        history.push("/registration");
+        window.location.href = "/registration";
       });
     } catch {
       console.log("faile to logout");
@@ -75,7 +86,7 @@ export default function Navbar() {
   }
 
   return (
-    <div dir={lang === "English" ? "ltr" : "rtl"}>
+    <div dir={lang === "English" ? "ltr" : "rtl"} className={ShowNav}>
       <header className="main-header sticky-top">
         <div className="container">
           <div className="row">
@@ -192,7 +203,7 @@ export default function Navbar() {
                   {userDetails.firstName + " " + userDetails.lastName}
                 </span>
                 <span className="email">{userDetails.email}</span>
-                <span className="view-profile-link">{json[0].viewProfile}</span>
+                {/* <span className="view-profile-link">{json[0].viewProfile}</span> */}
               </NavLink>
             </div>
           </div>
