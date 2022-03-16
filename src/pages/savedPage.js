@@ -1,15 +1,42 @@
 import SavedCard from "./../components/jobModule/saved/index";
 import React, { useState, useEffect, useContext } from "react";
 import { languageContext } from "./../contexts/languageContext";
-import saved from "../services/saved";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 import ar from "./../language/explore/ar.json";
 import en from "./../language/explore/en.json";
+import download from "./../assets/download.png";
+import saved from "../services/saved";
+
 function SavedPage(props) {
   const [save, setInfoSave] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { lang } = useContext(languageContext);
   const [json, setJson] = useState(en);
 
+  const HandleClick = (id) => {
+    let jobId = id;
+    saved
+      .deletSavedJob(jobId)
+      .then(() => {
+        localStorage.removeItem("id");
+        let list = save.filter((item) => {
+          console.log("item", item);
+          return item.id !== id;
+        });
+        setInfoSave(list);
+        toast.success("saved delted succesfully !", {
+          position: toast.POSITION.TOP_LEFT
+        });
+      })
+      .catch((err) => {
+        toast.error(err.message, {
+          position: toast.POSITION.TOP_LEFT
+        });
+      });
+  };
   //   const [count, setCount] = useState();
   useEffect(() => {
     if (lang === "English") {
@@ -61,49 +88,72 @@ function SavedPage(props) {
             </h4>
           </div>
 
-          {save.length > 0 ? (
-            save.map((post) => {
-              return lang === "English" ? (
-                <div key={post.id}>
-                  <SavedCard
-                    id={post.id}
-                    saved={post.data.saved}
-                    title={post.data.jobTitle}
-                    city={post.data.companyCountry}
-                    categories={post.data.jobCategories}
-                    country={post.data.companyCountry}
-                    componyName={post.data.companyName}
-                    ImageUrl={post.data.logo}
-                    experience={post.data.experience}
-                    companyIndustry={post.data.companyIndustry}
-                    careerLevel={post.data.careerLevel}
-                    time={post.data.jobType}
-                  />
+          {save.map((post, index) => {
+            return (
+              <div key={post.id}>
+                <div className="job__detail bg-body card bx-1 bt-1 mb-3">
+                  <header className="job__description d-flex justify-content-between border-bottom mx-2 pb-2">
+                    <div className="card-body">
+                      <div>
+                        <Link
+                          to={`/jopdetails/${post.companyId}/${post.id}`}
+                          className="app_blue_color"
+                        >
+                          <span className=" job_title">
+                            {post.data.jobTitle}
+                          </span>
+                        </Link>
+                        <i className="badge text-secondary bg-light fw-light">
+                          {post.data.jobType}
+                        </i>
+                        <p>
+                          <small className="text-dark fw-normal">
+                            {post.data.companyName}
+                          </small>
+
+                          <span>-</span>
+                          <small className="text-secondary ">
+                            {post.data.companyCountry}
+                          </small>
+                        </p>
+                      </div>
+                      <div className="text-secondary fs-6">
+                        <small>
+                          {post.data.jobCategories} . {post.data.experience} .
+                          {post.data.companyIndustry} , {post.data.careerLevel}
+                        </small>
+                        <time className="text-success"> {json.day}</time>
+                      </div>
+                    </div>
+                    <a href="company" className="mt-4 me-4">
+                      <img
+                        src={`${!post.data.logo ? download : post.data.logo}`}
+                        width="85px"
+                        alt={post.data.jobTitle}
+                      />
+                    </a>
+                  </header>
+                  <div className="job__reacts d-flex align-items-center ps-3 mt-1  mb-1 text-secondary">
+                    <button
+                      id="save"
+                      className={`btn  text-secondary`}
+                      onClick={() => HandleClick(post.id)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faBookmark}
+                        className="me-1 ms-1"
+                      />
+                      {json.UnSave}
+                    </button>
+                    <button className="btn   text-secondary hovering_btn ">
+                      <FontAwesomeIcon icon={faShare} className="me-1 ms-1" />
+                      {json.share}
+                    </button>
+                  </div>
                 </div>
-              ) : (
-                <div key={post.id}>
-                  <SavedCard
-                    id={post.id}
-                    saved={post.data.saved}
-                    title={post.data.jobTitleAR}
-                    city={post.data.companyCountry}
-                    categories={post.data.jobCategoriesAR}
-                    country={post.data.companyCountry}
-                    componyName={post.data.companyName}
-                    careerLevel={post.data.careerLevelAR}
-                    ImageUrl={post.data.logo}
-                    experience={post.data.experienceAR}
-                    companyIndustry={post.data.companyIndustry}
-                    time={post.data.jobTypeAR}
-                  />
-                </div>
-              );
-            })
-          ) : (
-            <div>
-              <p>{json.savedJobNodata}</p>
-            </div>
-          )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </>
