@@ -45,13 +45,16 @@ const ExplorCard = ({ item }) => {
         setSave(true);
         localStorage.setItem("id", jobid);
         toast.success("saved   succesfully !", {
-          position: toast.POSITION.TOP_LEFT
+          position: toast.POSITION.TOP_LEFT,
+          hideProgressBar: true,
+
         });
       })
       .catch((err) => {
         console.log(err);
         toast.error(err.message, {
-          position: toast.POSITION.TOP_LEFT
+          position: toast.POSITION.TOP_LEFT,
+          hideProgressBar: true,
         });
       });
   };
@@ -144,11 +147,13 @@ const ExplorCard = ({ item }) => {
             className={`btn  hovering_btn ${
               save === true || id === item.id ? "save-active" : "text-secondary"
             }`}
+            disabled={id === item.id||save === true?true:false}
+            // {id === item.id&&save === true?disabled:""}
             onClick={() => HandleClick(item.data.id)}
           >
             <FontAwesomeIcon icon={faBookmark} className="me-1 ms-1" />
             {save === true || id === item.data.id ? (
-              <span className=""> {json.saved}</span>
+              <span className="" > {json.saved}</span>
             ) : (
               <span className=""> {json.save}</span>
             )}

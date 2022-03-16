@@ -269,7 +269,7 @@ function SearchPage(props) {
               setTimeout(() => {
                   for (let i = 0; i < response.length; i++) 
                   {
-                    if(  response[i].data.jobCategories.includes("IT"))
+                    if(  response[i].data.jobCategories.includes("it"))
                     {
                       console.log(response[i])
                       jobsArray.push(response[i])

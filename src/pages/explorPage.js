@@ -9,12 +9,13 @@ import saved from "../services/saved";
 import ar from "./../language/explore/ar.json";
 import en from "./../language/explore/en.json";
 import Footer from "./../components/footer/index";
+import { useHistory } from "react-router-dom";
 function ExplorPage() {
   const [menuItems, setMenuItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { lang } = useContext(languageContext);
   const [json, setJson] = useState(en);
-
+  const histroy = useHistory()
   const [userDetails, setUserDetails] = useState({});
   const { currentUser } = useAuth();
   const [save, setInfoSave] = useState([]);
@@ -88,10 +89,6 @@ function ExplorPage() {
           <div className=" my-3">
             <>
               <h4> {json.title}</h4>
-              <p className=" fw-light">
-                {json.subtitle}
-                <Link to={"/career-interests"}>{json.interests}</Link>
-              </p>
             </>
           </div>
 
@@ -130,7 +127,7 @@ function ExplorPage() {
                   />
                 </div>
                 <div className="col-lg col-md ms-4">
-                  <span className="user-name mt-1 text-capitalize">
+                  <span className="user-name mt-1 text-capitalize fw-bold">
                     {userDetails.firstName + " " + userDetails.lastName}
                   </span>
                   <p className="text-capitalize text-muted">
@@ -143,7 +140,9 @@ function ExplorPage() {
                 <p className="text-muted fs-6 fw-light">
                   {json.sidebarSubskill}
                 </p>
-                <button className="btn btn-outline-primary">
+                <button className="btn btn-outline-primary" onClick={() => {
+                  histroy.push('/profile/general-info')
+                }}>
                   {json.sidebarskill}
                 </button>
               </div>

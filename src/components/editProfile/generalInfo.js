@@ -6,10 +6,8 @@ import { db, storage } from "../../firebase";
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 import { languageContext } from '../../contexts/languageContext';
-
 import ar from "../../language/editProfile/general-info/ar.json"
 import en from "../../language/editProfile/general-info/en.json"
-
 export default function GeneralInfo() {
     const { currentUser } = useAuth()
     const [userDetails, setUserDetails] = useState({});
@@ -23,6 +21,7 @@ export default function GeneralInfo() {
     const [image, setImage] = useState("")
     const fileRef = useRef(null);
     const [visible, setVisible] = useState(false);
+    const [showMilatiry, setMilatiry] = useState(true);
 
     const militaryStatus = [
         { value: 'not applicable', label: 'Not Applicable' },
@@ -75,7 +74,6 @@ export default function GeneralInfo() {
             }
         })
     }
-
     const lastNameChangeHandler = (event) => {
         setUserDetails((prevState) => {
             return {
@@ -84,7 +82,6 @@ export default function GeneralInfo() {
             }
         })
     }
-
     const middleNameChangeHandler = (event) => {
         setUserDetails((prevState) => {
             return {
@@ -95,11 +92,18 @@ export default function GeneralInfo() {
     }
 
     const genderChangeHandler = (event) => {
+        if(event.target.value==="female"){
+                setMilatiry(true)
+        }else{
+            setMilatiry(false)
+        }
         setUserDetails((prevState) => {
+            
             return {
                 ...prevState,
                 gender: event.target.value
             }
+            
         })
     }
 
@@ -458,7 +462,7 @@ export default function GeneralInfo() {
                                 </div>
                             </div>
 
-                            <div className="col-md-7 ">
+                            <div hidden={showMilatiry} >
                                 <div className="midsection__form">
                                     <label className="col-form-label form-label">{json.militraySatus}</label>
                                     <Select className='w-100'
@@ -469,7 +473,7 @@ export default function GeneralInfo() {
                                 </div>
                             </div>
 
-                            <div className="col-md-12 ">
+                            <div className="col-md-12 " >
                                 <div className="midsection__form">
                                     <label className="col-form-label form-label">{json.maritalStatus}</label>
                                     <div className="form-check" onChange={maritalStatusChangeHandler}>
