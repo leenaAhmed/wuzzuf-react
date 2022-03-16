@@ -7,6 +7,7 @@ import appliction from "../../../services/appliction";
 import ar from "../../../language/explore/ar.json";
 import en from "../../../language/explore/en.json";
 import { languageContext } from "../../../contexts/languageContext";
+import { toast } from "react-toastify";
 
 export default function ApplyToJob(props) {
   let { jobId } = useParams();
@@ -40,10 +41,17 @@ export default function ApplyToJob(props) {
     appliction
       .addApplicationJob(jobId, companyId, data, jobDetails)
       .then(() => {
-        history.goBack();
+        history.push("/applications-page");
+        toast.success("Applied succesfully !", {
+          position: toast.POSITION.TOP_LEFT
+        });
       })
       .catch((err) => {
-        console.error(err);
+
+      
+        toast.warn("Error in sending your application !", {
+          position: toast.POSITION.TOP_LEFT
+        });
       });
   };
   console.log(jobDetails);
