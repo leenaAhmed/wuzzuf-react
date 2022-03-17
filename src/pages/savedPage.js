@@ -1,4 +1,3 @@
-import SavedCard from "./../components/jobModule/saved/index";
 import React, { useState, useEffect, useContext } from "react";
 import { languageContext } from "./../contexts/languageContext";
 import { Link } from "react-router-dom";

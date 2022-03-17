@@ -4,10 +4,35 @@ import { Link } from "react-router-dom";
 import ar from "../../../language/explore/ar.json";
 import en from "../../../language/explore/en.json";
 import { useState, useEffect, useContext } from "react";
+import saved from "../../../services/saved";
+import { toast } from "react-toastify";
+
 import { languageContext } from "../../../contexts/languageContext";
 export default function CardHeader(props) {
   const { lang, setLang } = useContext(languageContext);
+  const [save, setSave] = useState(false);
+
   const [json, setJson] = useState(en);
+  const HandleClick = (jobid) => {
+    console.log(jobid);
+    saved
+      .addJobtoSavedPage(jobid)
+      .then(() => {
+        setSave(true);
+        localStorage.setItem("id", jobid);
+        toast.success("saved   succesfully !", {
+          position: toast.POSITION.TOP_LEFT,
+          hideProgressBar: true
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message, {
+          position: toast.POSITION.TOP_LEFT,
+          hideProgressBar: true
+        });
+      });
+  };
   useEffect(() => {
     if (lang === "English") {
       setJson(en);
@@ -94,7 +119,11 @@ export default function CardHeader(props) {
             </Link>
 
             <div className="mr-8 ">
-              <button type="button" className="sharebtn">
+              <button
+                type="button"
+                className="sharebtn"
+                onClick={() => HandleClick(props.id)}
+              >
                 <i size="24" className="css-16r7llb efou2fk0">
                   <svg
                     width="24"
