@@ -36,7 +36,7 @@ This app uses some dependencies:
 1. [fontawesome](https://www.npmjs.com/package/@fortawesome/react-fontawesome) - to add descriptive icons.
 
 1. [Firestore](https://www.npmjs.com/package/firebase) - to add backend .
-1. [localizatopn] 
+1. [localization] 
 
 # Our Style Guide
 
