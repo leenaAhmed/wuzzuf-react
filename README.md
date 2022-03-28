@@ -32,15 +32,12 @@ This app uses some dependencies:
 
 1. [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) - to implement routing in the app.
 
-1. [react-redux](https://react-redux.js.org/) - to implement routing in the app.
-
 1. [Bootstrap](https://getbootstrap.com/) - to add visual designs to the app and helps making css better and easier.
-
-1. [axios](https://github.com/axios/axios) - to consume APIs and integrate with the `back-end`.
 
 1. [fontawesome](https://www.npmjs.com/package/@fortawesome/react-fontawesome) - to add descriptive icons.
 
 1. [Firestore](https://www.npmjs.com/package/firebase) - to add backend .
+2. [localizatopn]
 
 # Our Style Guide
 
